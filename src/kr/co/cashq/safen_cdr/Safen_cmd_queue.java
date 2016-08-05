@@ -27,9 +27,8 @@ public class Safen_cmd_queue {
 
 			StringBuilder sb = new StringBuilder();
 
-//			sb.append("select exists(select 1 from safen_cdr) a");
+			//sb.append("select exists(select 1 from safen_cdr) a");
 			sb.append("select * from safen_cdr");
-
 			try {
 				dao.openPstmt(sb.toString());
 
@@ -38,27 +37,50 @@ public class Safen_cmd_queue {
 				if (dao.rs().next()) {
 					
 					SAFEN_CDR.heart_beat = 1;
-					
+					/*
+					sb.append("select group_cd from safen_master where safen=?");
+					dao.openPstmt(sb.toString());
+					dao.setRs(dao.pstmt().executeQuery());
+
+					if (dao.rs().next()) {
+						strGrp = dao.rs().getString("group_cd");
+					}
+
+					dao.closePstmt();
+					*/
 					//if (dao.rs().getInt(1) == 1) {
 					//int seq = dao4.rs().getInt("seq");
-					if (dao.rs().getInt("seq")>0) {
-						
-						dao.tryClose();
+					Utils.getLogger().info("seq - > "+dao.rs().getInt("seq"));
+					Utils.getLogger().info("boolean : ");
+					Boolean chk_seq=dao.rs().getInt("seq")>0;
+					Utils.getLogger().info(chk_seq?"true":"false");
+					if (chk_seq) {
+								
+						//dao.tryClose();
 						/*
 						.setLength(0);
 						*/
 						StringBuilder sb2 = new StringBuilder();
 						String hist_table = DBConn.isExistTableYYYYMM();
+						int resultCnt2 = 0;
+						sb2.setLength(0);
+						//getString
+						/*
 						sb2.append("INSERT INTO 0507_point SET mb_hp='");
 						sb2.append(dao.rs().getString("safen_in")+"',");
 						sb2.append("store_name='");
 						sb2.append(dao.rs().getString("safen_out")+"';");
-
+						*/
+						sb2.append("INSERT INTO 0507_point SET mb_hp=?,store_name=?;");
 						dao5.openPstmt(sb2.toString());
 
-						int resultCnt2 = dao5.pstmt().executeUpdate();
+						dao5.pstmt().setString(1, dao.rs().getString("safen_in"));
+						dao5.pstmt().setString(2, dao.rs().getString("safen_out"));
+
+						dao5.pstmt().executeUpdate();
 
 						sb2.setLength(0);
+						
 						sb2.append("insert into ");
 						sb2.append(hist_table);
 						sb2.append(" select * from safen_cdr ");// 처리가
