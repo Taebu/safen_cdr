@@ -199,7 +199,7 @@ public class SAFEN_CDR {
 			
 			//waitMiliSec(5000);
 			
-			strRetVal = w.doMsgMain();
+//			strRetVal = w.doMsgMain();
 			w.doDBWork(strRetVal);
 
 		} catch (Exception e) {

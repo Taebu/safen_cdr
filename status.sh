@@ -1,2 +1,2 @@
-ps -ef|grep 1182/bin|grep java|grep safen_cdr|awk 'BEGIN {FS=" "} {print $2}'
+ps -ef|grep safen_cdr/bin|grep java|grep safen_cdr|awk 'BEGIN {FS=" "} {print $2}'
 

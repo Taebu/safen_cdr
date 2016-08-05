@@ -23,10 +23,12 @@ public class Safen_cmd_queue {
 			MyDataObject dao2 = new MyDataObject();
 			MyDataObject dao3 = new MyDataObject();
 			MyDataObject dao4 = new MyDataObject();
+			MyDataObject dao5 = new MyDataObject();
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("select exists(select 1 from safen_cdr) a");
+//			sb.append("select exists(select 1 from safen_cdr) a");
+			sb.append("select * from safen_cdr");
 
 			try {
 				dao.openPstmt(sb.toString());
@@ -37,13 +39,26 @@ public class Safen_cmd_queue {
 					
 					SAFEN_CDR.heart_beat = 1;
 					
-					if (dao.rs().getInt(1) == 1) {
+					//if (dao.rs().getInt(1) == 1) {
+					//int seq = dao4.rs().getInt("seq");
+					if (dao.rs().getInt("seq")>0) {
 						
 						dao.tryClose();
-						
+						/*
+						.setLength(0);
+						*/
 						StringBuilder sb2 = new StringBuilder();
 						String hist_table = DBConn.isExistTableYYYYMM();
+						sb2.append("INSERT INTO 0507_point SET mb_hp='");
+						sb2.append(dao.rs().getString("safen_in")+"',");
+						sb2.append("store_name='");
+						sb2.append(dao.rs().getString("safen_out")+"';");
 
+						dao5.openPstmt(sb2.toString());
+
+						int resultCnt2 = dao5.pstmt().executeUpdate();
+
+						sb2.setLength(0);
 						sb2.append("insert into ");
 						sb2.append(hist_table);
 						sb2.append(" select * from safen_cdr ");// 처리가
@@ -54,7 +69,7 @@ public class Safen_cmd_queue {
 						// safen_cmd_queue where status_cd != ''
 						dao2.openPstmt(sb2.toString());
 
-						int resultCnt2 = dao2.pstmt().executeUpdate();
+						resultCnt2 = dao2.pstmt().executeUpdate();
 						if(resultCnt2!=1) {
 							Utils.getLogger().warning(dao2.getWarning(resultCnt2,1));
 							DBConn.latest_warning = "ErrPOS027";

@@ -38,42 +38,6 @@ public class CdrTrigger {
 	}
 
 	/**
-	 * CallLog서버에 연결한다. 성공시 true를 리턴한다.
-	 * 
-	 * @param host
-	 * @param port
-	 * @return
-	 */
-	private boolean connect2CallLogServer(String host, int port) {
-		try {
-			InetAddress netHost;
-			netHost = InetAddress.getByName(host);
-
-			socket = new Socket(netHost, port);
-
-			bis = new BufferedInputStream(socket.getInputStream());
-			bos = new BufferedOutputStream(socket.getOutputStream());
-			isConnected = true;
-			nLogonAndCon = 1;
-		} catch (UnknownHostException e) {
-			Utils.getLogger().warning(e.getMessage());
-			isConnected = false;
-			nLogonAndCon = 2;
-		} catch (IOException e) {
-			Utils.getLogger().warning(e.getMessage());
-			isConnected = false;
-			nLogonAndCon = 2;
-		} catch (Exception e) {
-			Utils.getLogger().warning(e.getMessage());
-			Utils.getLogger().warning(Utils.stack(e));
-			isConnected = false;
-			nLogonAndCon = 2;
-		}
-		Utils.getLogger().info(":connect:" + isConnected);
-		return isConnected;
-	}
-
-	/**
 	 * 메세지를 보낸다.
 	 * 
 	 * @param message
@@ -81,8 +45,7 @@ public class CdrTrigger {
 	private void sendMessage(String message) {
 		try {
 			if (isConnected == false) {
-				connect2CallLogServer(Env.getInstance().CALL_LOG_SERVER_IP,
-						Env.getInstance().CALL_LOG_SERVER_PORT);
+				//connect2CallLogServer(Env.getInstance().CALL_LOG_SERVER_IP,	Env.getInstance().CALL_LOG_SERVER_PORT);
 			}
 			if (isConnected) {
 				bos.write(message.getBytes());
@@ -148,20 +111,6 @@ public class CdrTrigger {
 	 * @param paramVal
 	 */
 	public void doDBWork(String paramVal) {
-		// "20004               00001031304             
-		// 11822 
-		// 01201607110009895037070****0618         05041100000         010****1183         
-		// 2016071120551020160711205555201607112055252016071120555545    30    1
-		// 02201607120009912425070****7111         05041111228                             
-		// 2016071214435720160712144400                            3     0     F";
-		// String strVal;
-		// String loginSuccessMsg = "20004               0000";// 총24글자
-		// if (paramVal.startsWith(Env.CALL_LOG_WORK_2000)) {
-		// strVal = paramVal.substring(N24);
-		// isLogon = true;
-		// } else {
-		// strVal = paramVal;
-		// }
 		packetProcess(paramVal);
 	}
 
@@ -171,139 +120,7 @@ public class CdrTrigger {
 	 */
 	public void packetProcess(String strVal) throws NumberFormatException {
 		String strHeader2;
-		if (strVal.startsWith(Env.CALL_LOG_WORK_1031)) {
-			strVal = strVal.substring(4);// 304 ...
 
-			strHeader2 = strVal.substring(0, 6).trim();
-			// strHeader3 = strVal.substring(6,10);
-
-			strVal = strVal.substring(16);
-
-			// 길이검증
-			if (Integer.parseInt(strHeader2) < strVal.length()) {
-				strVal = strVal.substring(0, Integer.parseInt(strHeader2));// 길이가
-																			// 맞지
-																			// 않아
-																			// 이렇게
-																			// 함.
-																			// 중복
-																			// 패킷은
-																			// 뒤를
-																			// 잘라버리도록
-																			// 한다.
-			}
-			if (strVal.length() == Integer.parseInt(strHeader2)) {
-				String corp_code = strVal.substring(0, 4);
-				if (Env.getInstance().CORP_CODE.equals(corp_code))// 업체코드 일치여부
-																	// 검증
-				{
-					strVal = strVal.substring(4);
-					String strTuple_count = "";
-					strTuple_count = Utils.substringVal(strVal, 0, 2);
-					int iTuple_count = Integer.parseInt(strTuple_count);
-
-					strVal = strVal.substring(2);
-
-					// 튜플길이 검증
-					if (strVal.length() == iTuple_count * N149) {
-						StringBuilder sb_header = new StringBuilder();
-						sb_header.append(Env.CALL_LOG_WORK_2031);// 처음은4글자임
-
-						StringBuilder sb = new StringBuilder();
-						sb.append(Env.getInstance().CORP_CODE);
-
-						StringBuilder sb2 = new StringBuilder();
-						String str_tuple_unit_response = "";
-						String strVal1 = "";
-						while (N149 <= strVal.length()) {
-							strVal1 = strVal.substring(0, N149);
-							str_tuple_unit_response = parseCallLog(strVal1);
-							sb2.append(str_tuple_unit_response);
-							strVal = strVal.substring(N149);
-						}
-
-						// 후검증 미처리 패킷 문제가 있는지에 따른 검증
-						if (strVal.length() != 0) {
-							Utils.getLogger().warning(
-									"CallLog연동규약 변동 검토 필요함. strVal.length()=0이 아님=>"
-											+ strVal.length());
-							Utils.getLogger().warning(
-									"나머지(찌꺼기 이거나 문제가 되는 패킷:[" + strVal + "]");
-							DBConn.latest_warning = "ErrPOS004";
-						}
-
-						int i_myresponse_tuple_count = sb2.toString().length()
-								/ N24;
-
-						String str_myresponse_touble_count = String
-								.valueOf(i_myresponse_tuple_count);
-
-						sb.append(Utils.paddingLeft(2,
-								str_myresponse_touble_count));
-
-						// 자체검증
-						if (0 < i_myresponse_tuple_count) {
-							sb.append(sb2);// 검증후 전송 6.2.4 CallLog 전송 응답
-							int body_len = sb.toString().length();
-							sb_header.append(Utils.paddingLeft(6,
-									("" + body_len).trim()));
-							sb_header.append(Utils.space(10));
-							sb_header.append(sb);
-							sendMessage(sb_header.toString());
-						}
-					} else {
-						Utils.getLogger().warning(
-								"튜플 검증 오류! strVal.length() == iTuple_count => false, strVal.length() => "
-										+ strVal.length()
-										+ ", iTuple_count => " + iTuple_count);
-						Utils.getLogger().warning("미처리패킷:[" + strVal + "]");
-						DBConn.latest_warning = "ErrPOS005";
-					}
-				} else {
-					Utils.getLogger().warning(
-							"수신된 패킷의 업체코드 검증 오류! packet_body.substring(0,4) => "
-									+ corp_code
-									+ ", Env.getInstance().CORP_CODE) => "
-									+ Env.getInstance().CORP_CODE);
-					Utils.getLogger().warning("미처리패킷:[" + strVal + "]");
-					DBConn.latest_warning = "ErrPOS006";
-				}
-			} else {
-				Utils.getLogger().warning(
-						"수신된 패킷의 길이검증 오류! strVal.length() =>" + strVal.length()
-								+ ", Integer.parseInt(strHeader2) => "
-								+ strHeader2);
-				Utils.getLogger().warning("미처리패킷:[" + strVal + "]");
-				DBConn.latest_warning = "ErrPOS007";
-			}
-		} else {
-			if (4 <= strVal.length()) {
-				if (strVal.startsWith(Env.CALL_LOG_WORK_7778)) {
-					String strVal3 = strVal.substring(20);
-					if (0 < strVal3.length()) {
-						packetProcess(strVal3);
-					}
-				} else if (strVal.startsWith(Env.CALL_LOG_WORK_2000)) {
-					String strLogonSuccessMsg = Env.CALL_LOG_WORK_2000
-							+ Utils.paddingLeft(6, "4") + Utils.space(10)
-							+ Env.CALL_LOG_RET_0000;
-
-					if (strVal.startsWith(strLogonSuccessMsg)) {
-						isLogon = true;
-						nLogonAndCon = 1;
-					}
-					String strVal3 = strVal.substring(strLogonSuccessMsg
-							.length());
-					if (0 < strVal3.length()) {
-						packetProcess(strVal3);
-					}
-				} else {
-					Utils.getLogger().warning(
-							"구현되지 않은 업무코드 =>" + strVal.substring(0, 4));
-					DBConn.latest_warning = "ErrPOS008";
-				}
-			}
-		}
 	}
 
 	private String parseCallLog(String str) {
@@ -363,11 +180,12 @@ public class CdrTrigger {
 			result = true;
 		} else {
 			StringBuilder sb = new StringBuilder();
+			/*
 			sb.append("insert into safen_cdr(conn_sdt, conn_edt, conn_sec, service_sdt, ");
 			sb.append(" service_edt, service_sec, safen, safen_in, safen_out, billsec,");
 			sb.append(" unique_id, account_cd, calllog_rec_file, rec_file_cd, status_cd, create_dt) values("
 					+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())");
-
+			*/
 			MyDataObject dao = new MyDataObject();// PreparedStatement pstmt;
 
 			try {
@@ -435,70 +253,11 @@ public class CdrTrigger {
 		return result;
 	}
 
-	public boolean doLogon() {
-		if (isLogon == false) {
-			StringBuffer message = new StringBuffer();
-			message.append(Env.CALL_LOG_WORK_1000);
-
-			int body_length = 0;
-			body_length = Env.getInstance().CORP_CODE.length();
-			message.append(body_length);
-			int char_leng = String.valueOf(body_length).length();
-			message.append(Utils.space(6 - char_leng));
-
-			message.append(Utils.space(10));
-
-			message.append(Env.getInstance().CORP_CODE);
-
-			sendMessage(new String(message));
-
-			String strRetVal = "";
-
-			strRetVal = receiveMessage();
-
-			packetProcess(strRetVal);
-			
-			if(isLogon == false) {
-				nLogonAndCon = 2;//로그인 실패로 봄
-			}
-		}
-		Utils.getLogger().info(":logon:" + isLogon);
-		return isLogon;
-	}
-
 	public static CdrTrigger getInstance() {
 		if (Instance == null) {
 			Instance = new CdrTrigger();
 		}
 		return Instance;
-	}
-
-	public String doMsgMain() {
-		String strRetVal = "";
-		if (isLogon) {
-			StringBuffer message = new StringBuffer();
-			message.append(Env.CALL_LOG_WORK_7777);
-			message.append(Utils.paddingLeft(6, "0"));
-			message.append(Utils.space(10));
-
-			String msg = message.toString();
-			if (msg.length() == 20) {
-				sendMessage(msg);
-			} else {
-				Utils.getLogger().warning("메세지 길이가 20이 아닙니다.[" + msg + "]");
-				DBConn.latest_warning = "ErrPOS011";
-			}
-			
-			strRetVal = receiveMessage();
-
-			if ((Env.CALL_LOG_WORK_2000 + Utils.paddingLeft(6, "4")
-					+ Utils.space(10) + Env.CALL_LOG_RET_0002)
-					.equals(strRetVal)) {
-				// 로그인이 안된 것으로 보고 로그인을 시도함.
-				doLogon();
-			}
-		}
-		return strRetVal;
 	}
 
 }

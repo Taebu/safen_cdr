@@ -59,7 +59,7 @@ public class Smsq_send {
 				Utils.getLogger().warning(dao.getWarning(cnt, phones.length));
 				DBConn.latest_warning = "ErrPOS067";
 			} else {
-				Site_push_log.sendMsg(sms_phones, msg);
+				//Site_push_log.sendMsg(sms_phones, msg);
 			}
 			DBConn.latest_warning = "";
 			retVal = true;
@@ -118,7 +118,7 @@ public class Smsq_send {
 				Utils.getLogger().warning(dao.getWarning(cnt, phones.length));
 				DBConn.latest_warning = "ErrPOS070";
 			} else {
-				Site_push_log.sendMsg(sms_phones, msg);
+				//Site_push_log.sendMsg(sms_phones, msg);
 			}
 			retVal = true;
 		} catch (SQLException e) {
