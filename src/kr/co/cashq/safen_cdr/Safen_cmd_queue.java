@@ -50,43 +50,31 @@ public class Safen_cmd_queue {
 					*/
 					//if (dao.rs().getInt(1) == 1) {
 					//int seq = dao4.rs().getInt("seq");
-					Utils.getLogger().info("seq - > "+dao.rs().getInt("seq"));
-					Utils.getLogger().info("boolean : ");
+					//Utils.getLogger().info("seq - > "+dao.rs().getInt("seq"));
+					//Utils.getLogger().info("boolean : ");
 					Boolean chk_seq=dao.rs().getInt("seq")>0;
-					Utils.getLogger().info(chk_seq?"true":"false");
+					//Utils.getLogger().info("in  - > "+dao.rs().getString("safen_in")+", "+dao.rs().getString("safen_out"));
+
+					//Utils.getLogger().info(chk_seq?"true":"false");
 					if (chk_seq) {
-								
-						//dao.tryClose();
-						/*
-						.setLength(0);
-						*/
 						StringBuilder sb2 = new StringBuilder();
+						StringBuilder sb5 = new StringBuilder();
 						String hist_table = DBConn.isExistTableYYYYMM();
 						int resultCnt2 = 0;
-						sb2.setLength(0);
-						//getString
-						/*
-						sb2.append("INSERT INTO 0507_point SET mb_hp='");
-						sb2.append(dao.rs().getString("safen_in")+"',");
-						sb2.append("store_name='");
-						sb2.append(dao.rs().getString("safen_out")+"';");
-						*/
-						sb2.append("INSERT INTO 0507_point SET mb_hp=?,store_name=?;");
-						dao5.openPstmt(sb2.toString());
+
+						sb5.append("insert into `0507_point` set mb_hp=?,store_name=?");
+						dao5.openPstmt(sb5.toString());
 
 						dao5.pstmt().setString(1, dao.rs().getString("safen_in"));
 						dao5.pstmt().setString(2, dao.rs().getString("safen_out"));
-
 						dao5.pstmt().executeUpdate();
 
-						sb2.setLength(0);
-						
 						sb2.append("insert into ");
 						sb2.append(hist_table);
 						sb2.append(" select * from safen_cdr ");// 처리가
-																									// 진행중인것은
-																									// 포함하지
-																									// 않는다.
+																// 진행중인것은
+																// 포함하지
+																// 않는다.
 						// insert into safen_cmd_hist_201607 select * from
 						// safen_cmd_queue where status_cd != ''
 						dao2.openPstmt(sb2.toString());
@@ -132,7 +120,7 @@ public class Safen_cmd_queue {
 						}
 						// region 4 end <---
 					} else {
-
+						Utils.getLogger().info("chk_seq false log");
 						if (!"".equals(Env.confirmSafen)) {
 							// cmq_queue에는 없는 경우라면
 							//SafeNo safeNo = new SafeNo();
@@ -192,10 +180,11 @@ public class Safen_cmd_queue {
 				dao2.closePstmt();
 				dao3.closePstmt();
 				dao4.closePstmt();
+				dao5.closePstmt();
 			}
 			
 			//콜로그 마스터 정보의 레코드 1개를 갱신을 시도한다.
-			Safen_master.doWark2();
+			//Safen_master.doWark2();
 		}
 	}
 
