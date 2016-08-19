@@ -12,6 +12,10 @@ import java.sql.SQLException;
  */
 public class Safen_cmd_queue {
 	
+	boolean is_realcode=false;
+	boolean is_userpt=false;
+
+
 	/**
 	 * safen_cmd_queue 테이블의 데이터를 처리하기 위한 주요한 처리를 수행한다.
 	 */
@@ -28,7 +32,9 @@ public class Safen_cmd_queue {
 			StringBuilder sb = new StringBuilder();
 
 			//sb.append("select exists(select 1 from safen_cdr) a");
-			sb.append("select * from safen_cdr");
+			//sb.append("select * from safen_cdr limit 1");
+			sb.append("select * from safen_cdr where seq<192 limit 1;");
+			
 			try {
 				dao.openPstmt(sb.toString());
 
@@ -37,47 +43,76 @@ public class Safen_cmd_queue {
 				if (dao.rs().next()) {
 					
 					SAFEN_CDR.heart_beat = 1;
-					/*
-					sb.append("select group_cd from safen_master where safen=?");
-					dao.openPstmt(sb.toString());
-					dao.setRs(dao.pstmt().executeQuery());
-
-					if (dao.rs().next()) {
-						strGrp = dao.rs().getString("group_cd");
-					}
-
-					dao.closePstmt();
-					*/
-					//if (dao.rs().getInt(1) == 1) {
-					//int seq = dao4.rs().getInt("seq");
-					//Utils.getLogger().info("seq - > "+dao.rs().getInt("seq"));
-					//Utils.getLogger().info("boolean : ");
 					Boolean chk_seq=dao.rs().getInt("seq")>0;
-					//Utils.getLogger().info("in  - > "+dao.rs().getString("safen_in")+", "+dao.rs().getString("safen_out"));
 
-					//Utils.getLogger().info(chk_seq?"true":"false");
 					if (chk_seq) {
 						StringBuilder sb2 = new StringBuilder();
 						StringBuilder sb5 = new StringBuilder();
 						String hist_table = DBConn.isExistTableYYYYMM();
 						int resultCnt2 = 0;
+						/*
+						*/
+						/**
+						*   select conn_sdt,service_sdt,conn_edt,status_cd from safen_cdr;
+							
+							public static int set_TB_CALL_LOG(
+							String status_cd, 
+							String conn_sdt, 
+							String conn_edt,
+							String service_sdt,
+							String safen,
+							String safen_in,
+							String safen_out,
+							String calllog_rec_file) 
+						*/
+						String status_cd=dao.rs().getString("status_cd")==null?"":dao.rs().getString("status_cd");
+						String conn_sdt=dao.rs().getString("conn_sdt")==null?"":dao.rs().getString("conn_sdt");
+						String conn_edt=dao.rs().getString("conn_edt")==null?"":dao.rs().getString("conn_edt");
+						String service_sdt=dao.rs().getString("service_sdt")==null?"":dao.rs().getString("service_sdt");
+						String safen=dao.rs().getString("safen")==null?"":dao.rs().getString("safen");
+						String safen_in=dao.rs().getString("safen_in")==null?"":dao.rs().getString("safen_in");
+						String safen_out=dao.rs().getString("safen_out")==null?"":dao.rs().getString("safen_out");
+						String calllog_rec_file=dao.rs().getString("calllog_rec_file")==null?"":dao.rs().getString("calllog_rec_file");
+						
+						/* cashq.TB_CALL_LOG에 세팅합니다. */
+						int tcl_seq = set_TB_CALL_LOG(status_cd, conn_sdt,conn_edt, service_sdt, safen,safen_in,safen_out,calllog_rec_file);
+						
+						/* cashq.store.callcnt 갱신*/
+						update_stcall(safen_in);
+						
+						/* 4-2. Store Info 조회 */
+						String[] store_info=getStoreInfo(safen_in);
+						/**
+						* store_info[0] = name, 상점이름 
+						* store_info[1] = pre_pay, 골드,실버,캐시큐,일반,PRQ 
+						* store_info[2] = biz_code, 비즈코드 
+						* store_info[3] = seq, 상점고유번호 
+						* store_info[4] = type, 상점타입(예, 치킨,피자 등등의 코드) 
+						*/
 
-						sb5.append("insert into `0507_point` set mb_hp=?,store_name=?");
-						dao5.openPstmt(sb5.toString());
+						/* 4-3. Event Info 조회*/
+						String[] event_info=getEventCodeInfo(store_info[2]);
+						/**
+						* event_info[0] = ev_st_dt, 이벤트 시작일
+						* event_info[1] = ev_ed_dt, 이벤트 종료일
+						* event_info[2] = eventcode, 이벤트 코드 
+						* event_info[3] = cash, 캐시
+						* event_info[4] = pt_day_cnt, 일정립제한 갯수
+						* event_info[5] = pt_event_cnt, 이벤트코드 정립 제한 갯수
+						* event_info[6] = ed_type, 이벤트코드 타입
+						*/
+						boolean chk_realcode=is_realcode(event_info[2],store_info[2]);
 
-						dao5.pstmt().setString(1, dao.rs().getString("safen_in"));
-						dao5.pstmt().setString(2, dao.rs().getString("safen_out"));
-						dao5.pstmt().executeUpdate();
 
 						sb2.append("insert into ");
 						sb2.append(hist_table);
-						sb2.append(" select * from safen_cdr ");// 처리가
-																// 진행중인것은
-																// 포함하지
-																// 않는다.
+						/* 처리가 진행중인것은 포함하지 않는다. */
+						sb2.append(" select * from safen_cdr where seq=?");
+						
 						// insert into safen_cmd_hist_201607 select * from
 						// safen_cmd_queue where status_cd != ''
 						dao2.openPstmt(sb2.toString());
+						dao2.pstmt().setInt(1, dao.rs().getInt("seq"));
 
 						resultCnt2 = dao2.pstmt().executeUpdate();
 						if(resultCnt2!=1) {
@@ -88,14 +123,13 @@ public class Safen_cmd_queue {
 						// region 3 start --->
 						StringBuilder sb3 = new StringBuilder();
 
-						sb3.append("delete from safen_cdr");// 처리가
-																								// 진행중인것은
-																								// 지우지
-																								// 않는다.
-
+						/* 처리가 진행중인것은 지우지 않는다. */
+						sb3.append("delete from safen_cdr where seq=?");
+				
 						// insert into safen_cmd_hist_201607 select * from
 						// safen_cmd_queue where status_cd != ''
 						dao3.openPstmt(sb3.toString());
+						dao3.pstmt().setInt(1, dao.rs().getInt("seq"));
 
 						int resultCnt3 = dao3.pstmt().executeUpdate();
 						if(resultCnt3!=1) {
@@ -105,6 +139,7 @@ public class Safen_cmd_queue {
 						// region 3 end <---
 
 						// region 4 start --->
+						/*
 						StringBuilder sb4 = new StringBuilder();
 						
 						sb4.append("select * from safen_cdr limit 1");
@@ -118,9 +153,10 @@ public class Safen_cmd_queue {
 							String safen_in = dao4.rs().getString("safen_in");
 							doMapping(seq, safen, safen_in);
 						}
+						*/
 						// region 4 end <---
 					} else {
-						Utils.getLogger().info("chk_seq false log");
+						//Utils.getLogger().info("chk_seq false log");
 						if (!"".equals(Env.confirmSafen)) {
 							// cmq_queue에는 없는 경우라면
 							//SafeNo safeNo = new SafeNo();
@@ -133,14 +169,8 @@ public class Safen_cmd_queue {
 								DBConn.latest_warning = "ErrPOS029";
 							}
 
-							if (-1 < retCode.indexOf(Env.confirmSafen_in)) {// retCode
-																			// =
-																			// "01040421182,01040421182"
-																			// 와
-																			// 같은
-																			// 형태로
-																			// 리턴되는
-																			// 식임
+							if (-1 < retCode.indexOf(Env.confirmSafen_in)) {
+								/* retCode = "01040421182,01040421182" 와 같은 형태로 리턴되는 식임 */
 								Utils.getLogger().info(
 										"OK 착신연결성공" + Env.confirmSafen + "->"
 												+ Env.confirmSafen_in);
@@ -387,5 +417,444 @@ public class Safen_cmd_queue {
 		}
 
 		return retVal;
+	}
+
+
+	
+	/**
+	 * TB_CALL_LOG에 추가한다.
+	 * @param String status_cd	콜로그 상태 코드
+	 * @param String conn_sdt	콜로그 시작시간
+	 * @param String conn_edt	콜로그 종료시간
+	 * @param String service_sdt	콜로그 제공시간
+	 * @param String safen	안심번호
+	 * @param String safen_in
+	 * @param String safen_out
+	 * @param String calllog_rec_file
+	 * @return
+	 */
+	public static int set_TB_CALL_LOG(String status_cd, 
+		String conn_sdt, String conn_edt,String service_sdt,
+		String safen,String safen_in,String safen_out,
+		String calllog_rec_file) 
+	{
+		boolean retVal = false;
+		int last_id = 0;
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+		MyDataObject dao = new MyDataObject();
+		MyDataObject dao2 = new MyDataObject();
+		/*
+		Table: TB_CALL_LOG
+		Create Table: CREATE TABLE `TB_CALL_LOG` (
+		  `seq` int(11) NOT NULL AUTO_INCREMENT,
+		  `SVC_ID` varchar(4) DEFAULT NULL,
+		  `START_DT` datetime DEFAULT NULL,
+		  `END_DT` datetime DEFAULT NULL,
+		  `CALLED_HANGUP_DT` datetime DEFAULT NULL,
+		  `CALLER_NUM` varchar(16) DEFAULT NULL,
+		  `CALLED_NUM` varchar(16) DEFAULT NULL,
+		  `VIRTUAL_NUM` varchar(16) DEFAULT NULL,
+		  `REASON_CD` varchar(16) DEFAULT NULL,
+		  `REG_DT` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		  `userfield` varchar(255) DEFAULT NULL,
+		  `biz_code` varchar(20) DEFAULT NULL,
+		  `po_status` enum('0','1','2','3','4','5','6','99') NOT NULL DEFAULT '0',
+		  PRIMARY KEY (`seq`)
+		) ENGINE=MyISAM AUTO_INCREMENT=3143353 DEFAULT CHARSET=utf8
+		1 row in set (0.00 sec)
+
+		ERROR:
+		*/
+
+		sb.append("INSERT INTO `cashq`.`TB_CALL_LOG` SET ");
+		sb.append("SVC_ID='81',");
+		sb.append("START_DT=?,");
+		sb.append("END_DT=?,");
+		sb.append("CALLED_HANGUP_DT=?,");
+		sb.append("VIRTUAL_NUM=?,");
+		sb.append("CALLED_NUM=?,");
+		sb.append("CALLER_NUM=?,");
+		sb.append("userfield=?,");
+		sb.append("REASON_CD=?;");
+
+		/*
+		sb.append("insert into cashq.site_push_log set "
+				+ "stype='SMS', biz_code='ANP', caller=?, called=?, wr_subject=?, regdate=now(), result=''");
+		*/
+		try {
+			dao.openPstmt(sb.toString());
+
+			Utils.getLogger().warning(sb.toString());
+
+			if ("1".equals(status_cd)) {
+			/* GCM LOG 발생*/
+			set_stgcm(safen, safen_in);
+
+			/* 통화성공 */
+			dao.pstmt().setString(1, conn_sdt);
+			dao.pstmt().setString(2, conn_edt);
+			dao.pstmt().setString(3, service_sdt);
+			dao.pstmt().setString(4, safen);
+			dao.pstmt().setString(5, safen_in);
+			dao.pstmt().setString(6, safen_out);
+			dao.pstmt().setString(7, calllog_rec_file);
+			dao.pstmt().setString(8, status_cd);
+			}else{
+			/* 통화실패*/
+			dao.pstmt().setString(1, conn_sdt);
+			dao.pstmt().setString(2, conn_edt);
+			dao.pstmt().setString(3, "1970-01-01 09:00:00");
+			dao.pstmt().setString(4, safen);
+			dao.pstmt().setString(5, safen_in);
+			dao.pstmt().setString(6, safen_out);
+			dao.pstmt().setString(7, calllog_rec_file);
+			dao.pstmt().setString(8, status_cd);
+			}
+
+			dao.pstmt().executeUpdate();
+
+
+			sb2.append("select LAST_INSERT_ID() last_id;");
+			dao2.openPstmt(sb2.toString());
+			dao2.setRs(dao2.pstmt().executeQuery());
+			
+			if (dao2.rs().next()) {
+				last_id = dao2.rs().getInt("last_id");
+			}
+			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS060";
+			/* grant로 해당 사용자에 대한 권한을 주어 문제 해결이 가능하다.
+			grant all privileges on cashq.site_push_log to sktl@"%" identified by 'sktl@9495';
+			grant all privileges on cashq.site_push_log to sktl@"localhost" identified by 'sktl@9495';
+			 */
+			 
+		} catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS061";
+		} catch (NullPointerException e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS099";
+		} finally {
+			dao.closePstmt();
+			dao2.closePstmt();
+		}
+
+		return last_id;
+	}
+
+
+	/**
+	 * 0507_point에 추가한다.
+	 * @param String status_cd	콜로그 상태 코드
+	 * @param String conn_sdt	콜로그 시작시간
+	 * @param String conn_edt	콜로그 종료시간
+	 * @param String service_sdt	콜로그 제공시간
+	 * @param String safen	
+	 * @param String safen_in
+	 * @param String safen_out
+	 * @param String calllog_rec_file
+	 * @return
+	 */
+	public static int set_0507_point(String status_cd, 
+		String conn_sdt, String conn_edt,String service_sdt,
+		String safen,String safen_in,String safen_out,
+		String calllog_rec_file) 
+	{
+
+		boolean retVal = false;
+		int last_id = 0;
+		StringBuilder sb = new StringBuilder();
+		MyDataObject dao = new MyDataObject();
+		sb.append("insert into `cashq`.`0507_point` set ");
+		sb.append("mb_hp=?,");
+		sb.append("store_name=?,");
+		sb.append("point='2000',");
+		sb.append("hangup_time=?,");
+		sb.append("biz_code='?',");
+		sb.append("call_hangup_dt='?',");
+		sb.append("ev_st_dt='?',");
+		sb.append("ev_ed_dt='?',");
+		sb.append("eventcode='?',");
+		sb.append("mb_id='?',");
+		sb.append("certi_code='?',");
+		sb.append("insdate='?',");
+		sb.append("st_dt='?',");
+		sb.append("ed_dt='?',");
+		sb.append("tcl_seq=?,");
+		sb.append("store_seq=?,");
+		sb.append("moddate='?',");
+		sb.append("accdate='?' ");
+
+		/*
+		sb.append("insert into cashq.site_push_log set "
+				+ "stype='SMS', biz_code='ANP', caller=?, called=?, wr_subject=?, regdate=now(), result=''");
+		*/
+		try {
+			dao.openPstmt(sb.toString());
+
+			if ("1".equals(status_cd)) {
+			/* 통화성공 */
+			dao.pstmt().setString(1, conn_sdt);
+			dao.pstmt().setString(2, conn_edt);
+			dao.pstmt().setString(3, service_sdt);
+			dao.pstmt().setString(4, safen);
+			dao.pstmt().setString(5, safen_in);
+			dao.pstmt().setString(6, safen_out);
+			dao.pstmt().setString(7, calllog_rec_file);
+			dao.pstmt().setString(8, status_cd);
+			}else{
+			/* 통화실패*/
+			dao.pstmt().setString(1, conn_sdt);
+			dao.pstmt().setString(2, conn_edt);
+			dao.pstmt().setString(3, "1970-01-01 09:00:00");
+			dao.pstmt().setString(4, safen);
+			dao.pstmt().setString(5, safen_in);
+			dao.pstmt().setString(6, safen_out);
+			dao.pstmt().setString(7, calllog_rec_file);
+			dao.pstmt().setString(8, status_cd);
+			}
+
+			dao.pstmt().executeQuery();
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS060";
+			/* grant로 해당 사용자에 대한 권한을 주어 문제 해결이 가능하다.
+			grant all privileges on cashq.site_push_log to sktl@"%" identified by 'sktl@9495';
+			grant all privileges on cashq.site_push_log to sktl@"localhost" identified by 'sktl@9495';
+			 */
+		} catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS061";
+		} finally {
+			dao.closePstmt();
+		}
+		return last_id;
+	}
+
+
+
+	
+	/**
+	 * cdr 에 추가한다.
+	 * @param String status_cd	콜로그 상태 코드
+	 * @param String conn_sdt	콜로그 시작시간
+	 * @param String conn_edt	콜로그 종료시간
+	 * @param String service_sdt	콜로그 제공시간
+	 * @param String safen	
+	 * @param String safen_in
+	 * @param String safen_out
+	 * @param String calllog_rec_file
+	 * @return
+	 */
+	public static int set_cdr(String status_cd, 
+		String conn_sdt, String conn_edt,String service_sdt,
+		String safen,String safen_in,String safen_out,
+		String calllog_rec_file) 
+	{
+		boolean retVal = false;
+		int last_id = 0;
+		StringBuilder sb = new StringBuilder();
+		MyDataObject dao = new MyDataObject();
+		sb.append("INSERT INTO `asteriskcdrdb`.`cdr` SET ");
+		sb.append("calldate=?,");
+		sb.append("src=?,");
+		sb.append("dst=?,");
+		sb.append("duration=?,");
+		sb.append("billsec=?,");
+		sb.append("accountcode=?,");
+		sb.append("uniqueid=?,");
+		sb.append("userfield=?;");
+		//Utils.getLogger().warning(sb.toString());
+
+
+		/*
+		sb.append("insert into cashq.site_push_log set "
+				+ "stype='SMS', biz_code='ANP', caller=?, called=?, wr_subject=?, regdate=now(), result=''");
+		*/
+		try {
+			dao.openPstmt(sb.toString());
+
+			dao.pstmt().setString(1, dao.rs().getString("conn_sdt"));
+			dao.pstmt().setString(2, dao.rs().getString("safen_in"));
+			dao.pstmt().setString(3, dao.rs().getString("safen"));
+			dao.pstmt().setString(4, dao.rs().getString("conn_sec"));
+			dao.pstmt().setString(5, dao.rs().getString("service_sec"));
+			dao.pstmt().setString(6, dao.rs().getString("safen_out"));
+			dao.pstmt().setString(7, dao.rs().getString("unique_id"));
+			dao.pstmt().setString(8, dao.rs().getString("rec_file_cd"));
+
+			dao.pstmt().executeUpdate();
+			retVal = true;
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS060";
+			/* grant로 해당 사용자에 대한 권한을 주어 문제 해결이 가능하다.
+			grant all privileges on cashq.site_push_log to sktl@"%" identified by 'sktl@9495';
+			grant all privileges on cashq.site_push_log to sktl@"localhost" identified by 'sktl@9495';
+			 */
+		} catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS061";
+		} finally {
+			dao.closePstmt();
+		}
+		//return retVal;
+		return last_id;
+	}
+	
+	
+	/**
+	 * 상점 콜로그로 갱신한다.  retCode가 "0000"(성공)인경우에는 status_cd값을 "s"로 그렇지 않은 경우에는 "e"로 셋팅한 후 큐를
+	 * 지우고 로그로 보낸다. 
+	 * @param safen_in
+	 * @param retCode
+	 */
+	private static void update_stcall(String safen_in) {
+
+		MyDataObject dao = new MyDataObject();
+		
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("UPDATE `cashq`.`store` set callcnt=callcnt+1 where tel=?");
+
+			// status_cd 컬럼을 "i"<진행중>상태로 바꾼다.
+			dao.openPstmt(sb.toString());
+
+			dao.pstmt().setString(1, safen_in);
+
+			int cnt = dao.pstmt().executeUpdate();
+			if(cnt!=1) {
+				Utils.getLogger().warning(dao.getWarning(cnt,1));
+				DBConn.latest_warning = "ErrPOS034";
+			}
+
+			dao.tryClose();
+
+
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS037";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS038";
+			Utils.getLogger().warning(Utils.stack(e));
+		}
+		finally {
+			dao.closePstmt();
+		}
+	}
+
+
+	/**
+	 * 캐시큐 상점에서 안심번호에 따른 상점 정보를 리턴한다.
+	 * @param safen
+	 * @return
+	 */
+	private static String[] getStoreInfo(String safen) {
+		String[] s = new String[5];
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("select name,pre_pay,biz_code,seq,type from `cashq`.`store` where tel= ?");
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, safen);
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				s[0] = dao.rs().getString("name");
+				s[1] = dao.rs().getString("pre_pay");
+				s[2] = dao.rs().getString("biz_code");
+				s[3] = dao.rs().getString("seq");
+				s[4] = dao.rs().getString("type");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return s;
+	}
+
+	/**
+	 * 비즈코드에 따른 이벤트 코드 정보를 리턴한다.
+	 * @param biz_code
+	 * @return
+	 */
+	private static String[] getEventCodeInfo(String biz_code) {
+		String[] s = new String[7];
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("SELECT ev_st_dt,ev_ed_dt,eventcode,");
+		sb.append("cash,pt_day_cnt,pt_event_cnt,ed_type ");
+		sb.append("FROM `cashq`.`point_event_dt` ");
+		sb.append("WHERE biz_code=? and used='1' ");
+		sb.append("order by seq desc limit 1;");
+
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, biz_code);
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				s[0] = dao.rs().getString("ev_st_dt");
+				s[1] = dao.rs().getString("ev_ed_dt");
+				s[2] = dao.rs().getString("eventcode");
+				s[3] = dao.rs().getString("cash");
+				s[4] = dao.rs().getString("pt_day_cnt");
+				s[4] = dao.rs().getString("pt_event_cnt");
+				s[4] = dao.rs().getString("ed_type");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return s;
+	}
+	
+	/**
+	* is_realcode
+	*/
+	private static boolean is_realcode(String eventcode,String biz_code) {
+		boolean is_code=false;
+
+		String[] explode=eventcode.split("\\_");
+
+		is_code=explode[0].equals(biz_code);
+		return is_code;
 	}
 }

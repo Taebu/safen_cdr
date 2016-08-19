@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.text.ParseException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -255,7 +256,7 @@ public class Utils {
 	 * @param e
 	 * @return
 	 */
-	public static String stack(Error e) {
+	public static String stack(Error e) { 
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		e.printStackTrace(pw);
@@ -281,6 +282,32 @@ public class Utils {
 		return msg.substring(ifrom, ito);
 	}
 	
+	//날짜 유닉스타임으로 변경
+	public static long date2unix(String str)  
+	{
+	  long unixTime=0L;
+	  try{
+		  String dateString = str;
+		  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  Date date = dateFormat.parse(dateString);
+		  unixTime = (long)date.getTime()/1000;
+
+	  }catch (ParseException e) {
+			e.printStackTrace();
+	  }
+	  return unixTime;
+	}
+
+
+	//유닉스타임 날짜로 변경
+	public static String unix2date(String str)
+	{
+		String source = str; //DB에 저장된 유닉스타임 형식 날짜
+		long t = Long.parseLong(source + "000"); 
+		SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return simpleDate.format(t);
+	}
+
 
 
 }
