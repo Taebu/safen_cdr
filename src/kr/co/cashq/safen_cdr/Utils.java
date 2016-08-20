@@ -309,5 +309,18 @@ public class Utils {
 	}
 
 
+	/**
+	* String add60day
+	* @return String "yyyy-MM-dd" + INTERVAL 60 DAY
+	*/
+	public static String add60day(){
+		String retVal="";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 60); // Adding 60 days
+		retVal = sdf.format(c.getTime());
+		return retVal;
+	}
 
 }

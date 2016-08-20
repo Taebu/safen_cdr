@@ -103,7 +103,46 @@ public class Safen_cmd_queue {
 						*/
 						boolean chk_realcode=is_realcode(event_info[2],store_info[2]);
 
+						/** 
+						* 4-4. 이벤트 갯수 카운트
+						* 4-5. 하루 포인트 한번 포인트 여부
+						* 4-6. 핸드폰 번호 여부
+						* 4-7. 포인트 재적립 시간 여부 단위
+						*      point_event_dt, pt_event_cnt
+						* 4-8. NEW freedailypt 여부 조회
+						* 4-9. NEW 오늘을 기준으로 60일 코드를 가져온다.
+						* 4-10. NEW freeuserpt 여부 조회
+						* 4-11. NEW usereventcnt
+						* 4-12. NEW
+						*/
+						/* 4-4 */
+						int eventcnt = get_eventcnt(mb_hp,evencode);
 
+						/* 4-5 */
+						int eventcnt = get_daycnt(mb_hp);
+
+						/* 4-6 */
+						boolean is_hp = is_hp(safen_out);
+
+						/* 4-8 */
+						boolean is_freedailypt = is_freedailypt(ed_type);
+						
+						/* 4-10 */
+						boolean is_freeuserpt = is_freeuserpt(ed_type);
+						
+						/* 4-11 */
+						if(is_freeuserpt){
+							int usereventindex = get_user_event_index(mb_hp, biz_code);
+						}
+						
+						/* 4-12 */
+						if(usereventindex==0&&is_hp&&status_cd.equals("1")){
+							/* user_event 생성하기 */
+							int user_event_dt_index = set_user_event_dt(biz_code, mb_hp, daily_st_dt,daily_ed_dt,eventcode);
+						}else if(usereventindex>0){
+							/* user_event 조회하기 */
+							String[] user_event_info = get_userevent(biz_code, mb_hp);
+						}
 						sb2.append("insert into ");
 						sb2.append(hist_table);
 						/* 처리가 진행중인것은 포함하지 않는다. */
@@ -114,7 +153,7 @@ public class Safen_cmd_queue {
 						dao2.openPstmt(sb2.toString());
 						dao2.pstmt().setInt(1, dao.rs().getInt("seq"));
 
-						resultCnt2 = dao2.pstmt().executeUpdate();
+ 						resultCnt2 = dao2.pstmt().executeUpdate();
 						if(resultCnt2!=1) {
 							Utils.getLogger().warning(dao2.getWarning(resultCnt2,1));
 							DBConn.latest_warning = "ErrPOS027";
@@ -856,5 +895,275 @@ public class Safen_cmd_queue {
 
 		is_code=explode[0].equals(biz_code);
 		return is_code;
+	}
+
+	/**
+	* int get_eventcnt
+	* @param mb_hp
+	* @param eventcode
+	* @return int
+	*/
+	private static int get_eventcnt(String mb_hp, String eventcode){
+		int retVal = 0;
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("SELECT count(*) cnt FROM `cashq`.`0507_point` ");
+		sb.append("WHERE mb_hp=? ");
+		sb.append("AND eventcode=? ");
+		sb.append("AND status in ('1','2','3','4');");
+
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, mb_hp);
+			dao.pstmt().setString(2, eventcode);
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				retVal = dao.rs().getInt("cnt");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return retVal;
+
+	}
+	/**
+	* int get_daycnt
+	* @param mb_hp
+	* @return int
+	*/
+	private static int get_daycnt(String mb_hp){
+		int retVal = 0;
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("SELECT count(*) cnt FROM `cashq`.`0507_point` ");
+		sb.append("WHERE mb_hp=? ");
+		sb.append("AND date(insdate)=date(now()) ");
+		sb.append("AND status in ('1','2','3','4')");
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, mb_hp);
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				retVal = dao.rs().getInt("cnt");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return retVal;
+	}
+
+
+	/**
+	* boolean is_hp
+	* @param hp
+	* @return boolean
+	*/
+	private static boolean is_hp(String hp){
+		boolean retVal=false;
+		retVal=hp.substring(0,2).equals("01");
+		return retVal;
+	}
+	
+	/**
+	* boolean is_freedailypt
+	* @param ed_type
+	* @return boolean
+	*/
+	private static boolean is_freedailypt(String ed_type){
+		boolean retVal=false;
+		retVal = ed_type.substring(0,11).equals("freedailypt");
+		return retVal;
+	}
+
+
+	/**
+	* boolean is_freeuserpt
+	* @param ed_type
+	* @return boolean
+	*/
+	private static boolean is_freeuserpt(String ed_type){
+		boolean retVal=false;
+		retVal = ed_type.substring(0,10).equals("freeuserpt");
+		return retVal;
+	}
+
+
+
+	/**
+	* int get_user_event_index
+	* @param mb_hp
+	* @param biz_code
+	* @return int
+	*/
+	private static int get_user_event_index(String mb_hp,String biz_code){
+		int retVal = 0;
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("SELECT count(*) cnt FROM `cashq`.`user_event_dt` ");
+		sb.append("WHERE biz_code=? ");
+		sb.append("and mb_hp=? ");
+		sb.append("order by seq desc limit 1");
+		
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, biz_code);
+			dao.pstmt().setString(2, mb_hp);
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				retVal = dao.rs().getInt("cnt");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return retVal;
+	}
+
+
+/**
+	 * 0507_point에 추가한다.
+	 * @param String status_cd	콜로그 상태 코드
+	 * @param String conn_sdt	콜로그 시작시간
+	 * @param String conn_edt	콜로그 종료시간
+	 * @param String service_sdt	콜로그 제공시간
+	 * @param String safen	
+	 * @param String safen_in
+	 * @param String safen_out
+	 * @param String calllog_rec_file
+	 * @return
+	 */
+	public static int set_user_event_dt(String biz_code, 
+		String mb_hp, String daily_st_dt,String daily_ed_dt,
+		String eventcode) 
+	{
+
+		boolean retVal = false;
+		int last_id = 0;
+		StringBuilder sb = new StringBuilder();
+		MyDataObject dao = new MyDataObject();
+		sb.append("INSERT INTO `cashq`.`user_event_dt` SET ");
+		sb.append("biz_code=@biz_code,");
+		sb.append("mb_hp=@n_src,");
+		sb.append("ev_st_dt=@daily_st_dt,");
+		sb.append("ev_ed_dt=@daily_ed_dt,");
+		sb.append("eventcode=@eventcode,");
+		sb.append("insdate=now();");
+
+		/*
+		sb.append("insert into cashq.site_push_log set "
+				+ "stype='SMS', biz_code='ANP', caller=?, called=?, wr_subject=?, regdate=now(), result=''");
+		*/
+		try {
+			dao.openPstmt(sb.toString());
+
+			dao.pstmt().setString(1, biz_code);
+			dao.pstmt().setString(2, mb_hp);
+			dao.pstmt().setString(3, daily_st_dt);
+			dao.pstmt().setString(4, daily_ed_dt);
+			dao.pstmt().setString(5, evencode);
+
+			dao.pstmt().executeQuery();
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS060";
+			/* grant로 해당 사용자에 대한 권한을 주어 문제 해결이 가능하다.
+			grant all privileges on cashq.site_push_log to sktl@"%" identified by 'sktl@9495';
+			grant all privileges on cashq.site_push_log to sktl@"localhost" identified by 'sktl@9495';
+			 */
+		} catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS061";
+		} finally {
+			dao.closePstmt();
+		}
+		return last_id;
+	}
+	/**
+	* get_userevent(biz_code, mb_hp)
+	*/
+	private static String[] get_userevent(String biz_code, String mb_hp) {
+		String[] s = new String[7];
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("SELECT  ");
+		sb.append("eventcode,");
+		sb.append("ev_ed_dt,");
+		sb.append("ev_st_dt ");
+		sb.append("FROM `cashq`.`user_event_dt` ");
+		sb.append("WHERE biz_code=? ");
+		sb.append("AND mb_hp=? ");
+		sb.append("ORDER BY seq desc limit 1;");
+
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, biz_code);
+			dao.pstmt().setString(2, mb_hp);
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				s[0] = dao.rs().getString("ev_st_dt");
+				s[1] = dao.rs().getString("ev_ed_dt");
+				s[2] = dao.rs().getString("eventcode");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return s;
 	}
 }
