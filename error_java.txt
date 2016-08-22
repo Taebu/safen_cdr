@@ -1,0 +1,135 @@
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:235: error: int cannot be dereferenced
+							&&daycnt.equals(0)
+							        ^
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:244: error: cannot find symbol
+							set_0507_point(mb_hp, store_name, hangup_time, 
+							                                  ^
+  symbol:   variable hangup_time
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:245: error: cannot find symbol
+							biz_code, call_hangup_dt, 
+							          ^
+  symbol:   variable call_hangup_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:247: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							^
+  symbol:   variable mb_id
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:247: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							       ^
+  symbol:   variable certi_code
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:247: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							                   ^
+  symbol:   variable st_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:247: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							                          ^
+  symbol:   variable ed_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:248: error: cannot find symbol
+							tcl_seq, moddate, accdate);
+							         ^
+  symbol:   variable moddate
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:248: error: cannot find symbol
+							tcl_seq, moddate, accdate);
+							                  ^
+  symbol:   variable accdate
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:255: error: int cannot be dereferenced
+							&&daycnt.equals(0)
+							        ^
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:264: error: cannot find symbol
+							set_0507_point(mb_hp, store_name, hangup_time, 
+							                                  ^
+  symbol:   variable hangup_time
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:265: error: cannot find symbol
+							biz_code, call_hangup_dt, 
+							          ^
+  symbol:   variable call_hangup_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:267: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							^
+  symbol:   variable mb_id
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:267: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							       ^
+  symbol:   variable certi_code
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:267: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							                   ^
+  symbol:   variable st_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:267: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							                          ^
+  symbol:   variable ed_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:268: error: cannot find symbol
+							tcl_seq, moddate, accdate);
+							         ^
+  symbol:   variable moddate
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:268: error: cannot find symbol
+							tcl_seq, moddate, accdate);
+							                  ^
+  symbol:   variable accdate
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:276: error: int cannot be dereferenced
+							&&daycnt.equals(0)
+							        ^
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:285: error: cannot find symbol
+							set_0507_point(mb_hp, store_name, hangup_time, 
+							                                  ^
+  symbol:   variable hangup_time
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:286: error: cannot find symbol
+							biz_code, call_hangup_dt, 
+							          ^
+  symbol:   variable call_hangup_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:288: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							^
+  symbol:   variable mb_id
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:288: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							       ^
+  symbol:   variable certi_code
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:288: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							                   ^
+  symbol:   variable st_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:288: error: cannot find symbol
+							mb_id, certi_code, st_dt, ed_dt, 
+							                          ^
+  symbol:   variable ed_dt
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:289: error: cannot find symbol
+							tcl_seq, moddate, accdate);
+							         ^
+  symbol:   variable moddate
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:289: error: cannot find symbol
+							tcl_seq, moddate, accdate);
+							                  ^
+  symbol:   variable accdate
+  location: class Safen_cmd_queue
+./src/kr/co/cashq/safen_cdr/Safen_cmd_queue.java:676: error: cannot find symbol
+			set_stgcm(safen, safen_in);
+			^
+  symbol:   method set_stgcm(String,String)
+  location: class Safen_cmd_queue
+28 errors
