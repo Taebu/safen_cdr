@@ -1,0 +1,458 @@
+Aug 26, 2016 4:06:33 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 26, 2016 4:06:34 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 4:07:26 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 4:07:27 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 4:07:27 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1395)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:244)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 4:07:27 PM kr.co.cashq.safen_cdr.Safen_cmd_queue doMainProcess
+WARNING: mb_hp : store_name : Java0504Teststr_hangup_time : 26biz_code : a059call_hangup_dt : 2016-08-26 16:06:58.0ev_st_dt :2016-08-19ev_ed_dt : 2016-10-18eventcode : a059_8mb_id : certi_code : st_dt : 2016-08-26 16:06:51.0ed_dt : 2016-08-26 16:07:24.0store_seq : 54208str_tcl_seq : 3243022moddate : accdate : 
+Aug 26, 2016 4:07:27 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_0507_point
+WARNING: Data truncation: Incorrect datetime value: '' for column 'moddate' at row 1
+Aug 26, 2016 4:07:27 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_0507_point
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect datetime value: '' for column 'moddate' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_0507_point(Safen_cmd_queue.java:932)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:367)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 4:07:40 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program ended!
+Aug 26, 2016 4:43:33 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 26, 2016 4:43:33 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 4:43:33 PM kr.co.cashq.safen_cdr.Safen_cmd_queue doMainProcess
+WARNING: mb_hp : store_name : 두레냉면str_hangup_time : 15biz_code : bd004call_hangup_dt : 2016-08-26 16:36:50.0ev_st_dt :nullev_ed_dt : nulleventcode : mb_id : certi_code : st_dt : 2016-08-26 16:36:42.0ed_dt : 2016-08-26 16:37:05.0store_seq : 54152str_tcl_seq : 3243107moddate : accdate : 
+Aug 26, 2016 4:43:34 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 4:43:36 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program ended!
+Aug 26, 2016 4:43:58 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 26, 2016 4:44:00 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 4:44:02 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program ended!
+Aug 26, 2016 4:45:23 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 26, 2016 4:45:24 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 4:46:15 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 4:46:16 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 4:46:16 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1398)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 4:46:16 PM kr.co.cashq.safen_cdr.Safen_cmd_queue doMainProcess
+WARNING: mb_hp : 01030372004store_name : Java0504Teststr_hangup_time : 37biz_code : a059call_hangup_dt : 2016-08-26 16:45:35.0ev_st_dt :2016-08-19ev_ed_dt : 2016-10-18eventcode : a059_8mb_id : certi_code : st_dt : 2016-08-26 16:45:28ed_dt : 2016-08-26 16:46:12store_seq : 54208str_tcl_seq : 3243112moddate : accdate : 
+Aug 26, 2016 4:46:16 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_0507_point
+WARNING: Data truncation: Incorrect datetime value: '' for column 'moddate' at row 1
+Aug 26, 2016 4:46:16 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_0507_point
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect datetime value: '' for column 'moddate' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_0507_point(Safen_cmd_queue.java:935)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:370)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 4:46:42 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program ended!
+Aug 26, 2016 4:48:17 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 26, 2016 4:48:18 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 4:48:51 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 4:48:51 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 4:48:51 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1398)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 4:48:51 PM kr.co.cashq.safen_cdr.Safen_cmd_queue doMainProcess
+WARNING: mb_hp : 01030372004store_name : Java0504Teststr_hangup_time : 19biz_code : a059call_hangup_dt : 2016-08-26 16:48:23.0ev_st_dt :2016-08-19ev_ed_dt : 2016-10-18eventcode : a059_8mb_id : certi_code : st_dt : 2016-08-26 16:48:17ed_dt : 2016-08-26 16:48:42store_seq : 54208str_tcl_seq : 3243118moddate : 1970-01-01 12:00:00accdate : 1970-01-01 12:00:00
+Aug 26, 2016 4:53:08 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program ended!
+Aug 26, 2016 4:53:24 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 26, 2016 4:53:25 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 4:54:18 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 4:54:19 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 4:54:19 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 5:03:29 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 5:13:29 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 5:23:32 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 5:23:37 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:23:38 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 5:23:38 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 5:30:36 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:30:37 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 5:30:37 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 5:32:21 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:32:21 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 5:32:21 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 5:33:34 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 5:36:14 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:36:14 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 5:36:14 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 5:38:38 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:38:39 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 5:38:39 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 5:40:49 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:41:40 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:41:55 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 5:43:36 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 5:53:38 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:03:38 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:13:39 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:23:39 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:33:40 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:38:20 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 6:43:42 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:44:27 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 6:45:38 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 6:53:43 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 6:56:37 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 6:56:39 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 7:03:43 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 7:13:46 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 7:23:48 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 7:33:48 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 7:35:08 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 7:35:09 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 7:35:09 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 7:40:37 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 7:43:51 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 7:53:52 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 7:59:04 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 8:01:15 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 8:03:53 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 8:04:49 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 8:04:50 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 8:04:50 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 8:13:56 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 8:23:56 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 8:26:44 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 8:28:43 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 8:31:34 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 8:33:57 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 8:43:57 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 8:53:57 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:03:58 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:13:59 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:22:09 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 9:23:59 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:34:00 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:44:00 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:54:03 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 9:55:03 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 9:58:00 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 10:04:05 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 10:14:07 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 10:24:09 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 10:34:09 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 10:39:39 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 10:44:12 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 10:54:15 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 11:00:39 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 11:04:17 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 11:05:29 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 11:14:19 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 11:24:20 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 11:34:23 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 11:35:33 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?처리결과가 [1]가 아닙니다.[0]
+Aug 26, 2016 11:35:33 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+Aug 26, 2016 11:35:33 PM kr.co.cashq.safen_cdr.Safen_cmd_queue set_user_event_dt
+WARNING: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Incorrect date value: '' for column 'ev_st_dt' at row 1
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3833)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3771)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2435)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2582)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2535)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1911)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2145)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2081)
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:2066)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.set_user_event_dt(Safen_cmd_queue.java:1399)
+	at kr.co.cashq.safen_cdr.Safen_cmd_queue.doMainProcess(Safen_cmd_queue.java:247)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doWork(SAFEN_CDR.java:238)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.doMainProcess(SAFEN_CDR.java:78)
+	at kr.co.cashq.safen_cdr.SAFEN_CDR.main(SAFEN_CDR.java:39)
+
+Aug 26, 2016 11:44:26 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 26, 2016 11:54:28 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
