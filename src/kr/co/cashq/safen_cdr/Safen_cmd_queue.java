@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Arrays;
 
 //import com.nostech.safen.SafeNo;
 
@@ -38,6 +39,8 @@ public class Safen_cmd_queue {
 		String moddate="1970-01-01 12:00:00";
 		String accdate="1970-01-01 12:00:00";
 		String str_hangup_time="";
+		String tel="";
+		String pt_stat="";
 
 		int eventcnt = 0;
 		int daycnt = 0;
@@ -150,9 +153,10 @@ public class Safen_cmd_queue {
 						/*	String service_sdt, 반응시간 */
 						service_sdt=dao.rs().getString("service_sdt")==null?"":dao.rs().getString("service_sdt");
 						
-						/*	String safen 안심번호, */
+						/*	String safen 안심번호, 050 */
 						safen=dao.rs().getString("safen")==null?"":dao.rs().getString("safen");
-						
+						tel=safen;
+
 						/*	String safen_in 상점번호, */
 						safen_in=dao.rs().getString("safen_in")==null?"":dao.rs().getString("safen_in");
 						
@@ -241,6 +245,7 @@ public class Safen_cmd_queue {
 						* 4-10. NEW freeuserpt 여부 조회
 						* 4-11. NEW usereventcnt
 						* 4-12. NEW
+						* 4-13. NEW pt_stat
 						*/
 
 
@@ -321,7 +326,10 @@ public class Safen_cmd_queue {
 						sb_log.append(accdate);
 						Utils.getLogger().warning(sb_log.toString());
 						*/
-						
+
+						/* 4-13 */
+						pt_stat=chk_pt5(ed_type);
+
 						/* fivept, freept 6. 적립조건*/
 						if(is_point(pre_pay)
 							&&service_sec>9
@@ -358,7 +366,9 @@ public class Safen_cmd_queue {
 								ev_ed_dt, eventcode, mb_id, 
 								certi_code, st_dt, ed_dt, 
 								store_seq, str_tcl_seq, moddate, 
-								accdate,ed_type);
+								accdate,ed_type,type,
+								tel,pre_pay,pt_stat);
+			
 						}
 
 						/* freedailypt 7. 적립조건*/
@@ -380,7 +390,8 @@ public class Safen_cmd_queue {
 								daily_ed_dt, eventcode, mb_id, 
 								certi_code, st_dt, ed_dt, 
 								store_seq, str_tcl_seq, moddate, 
-								accdate,ed_type);
+								accdate,ed_type,type,
+								tel,pre_pay,pt_stat);
 						}
 
 
@@ -403,7 +414,8 @@ public class Safen_cmd_queue {
 								daily_ed_dt, eventcode, mb_id, 
 								certi_code, st_dt, ed_dt, 
 								store_seq, str_tcl_seq, moddate, 
-								accdate,ed_type);
+								accdate,ed_type,type,
+								tel,pre_pay,pt_stat);
 						}
 
 
@@ -864,7 +876,12 @@ public class Safen_cmd_queue {
 	* @param  store_seq,
 	* @param  tcl_seq,
 	* @param  moddate,
-	* @param  accdate
+	* @param  accdate,
+	* @param  ed_type,
+	* @param  type
+	* @param  tel
+	* @param  pre_pay
+	* @param  pt_stat
 	 * @return void
 	 */
 	public static void set_0507_point(
@@ -884,7 +901,11 @@ public class Safen_cmd_queue {
 		String tcl_seq,
 		String moddate,
 		String accdate,
-		String ed_type
+		String ed_type,
+		String type,
+		String tel,
+		String pre_pay,
+		String pt_stat
 	) 
 	{
 
@@ -909,7 +930,13 @@ public class Safen_cmd_queue {
 		sb.append("store_seq=?,");
 		sb.append("moddate=?,");
 		sb.append("accdate=?, ");
-		sb.append("ed_type=? ");
+		sb.append("ed_type=?, ");
+		sb.append("type=?, ");
+		sb.append("tel=?, ");
+		sb.append("pre_pay=?, ");
+		sb.append("pt_stat=? ");
+
+
 /*
 *************************** 1. row ***************************
            seq: 945834
@@ -963,6 +990,10 @@ call_hangup_dt: 2016-07-22 18:13:16
 			dao.pstmt().setString(15, moddate);
 			dao.pstmt().setString(16, accdate);
 			dao.pstmt().setString(17, ed_type);
+			dao.pstmt().setString(18, type);
+			dao.pstmt().setString(19, tel);
+			dao.pstmt().setString(20, pre_pay);
+			dao.pstmt().setString(21, pt_stat);
 
 			//dao.pstmt().executeQuery();
 			dao.pstmt().executeUpdate();
@@ -1647,4 +1678,18 @@ call_hangup_dt: 2016-07-22 18:13:16
 		}
 		return retVal;
 	}
+
+
+	public static String chk_pt5(String str)
+	{
+		String retVal="pt5";
+		String[] ed_type= new String[] {"freept","freedailypt","freeuserpt"};
+
+		if(Arrays.asList(ed_type).contains(str)){
+			retVal="free";
+		}
+
+			return retVal; 
+	}
+
 }

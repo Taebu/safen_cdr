@@ -230,3 +230,29 @@ Aug 30, 2016 2:27:07 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
 INFO: SAFEN_CDR alive
 Aug 30, 2016 2:37:07 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
 INFO: SAFEN_CDR alive
+Aug 30, 2016 2:47:08 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 2:57:08 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 3:07:08 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 3:17:08 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 3:27:09 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 3:37:09 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 3:47:09 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 3:57:09 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 4:07:12 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 4:17:13 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Aug 30, 2016 4:20:41 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program ended!
+Aug 30, 2016 4:21:27 PM kr.co.cashq.safen_cdr.SAFEN_CDR main
+INFO: SAFEN_CDR program started!
+Aug 30, 2016 4:21:28 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
