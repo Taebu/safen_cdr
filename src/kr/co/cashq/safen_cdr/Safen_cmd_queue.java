@@ -117,7 +117,7 @@ public class Safen_cmd_queue {
 						*   select conn_sdt,service_sdt,conn_edt,status_cd from safen_cdr;
 							
 							public static int set_TB_CALL_LOG(
-							String status_cd 상태코드, 
+							String status_cd 상태코드,
 								po_status
 							String conn_sdt 시작시간, 
 								start_dt
@@ -137,18 +137,41 @@ public class Safen_cmd_queue {
 								userfield
 								) 
 						*/
+
+						/*	String status_cd 상태코드, */
 						status_cd=dao.rs().getString("status_cd")==null?"":dao.rs().getString("status_cd");
+						
+						/*	String conn_sdt 시작시간,  */
 						conn_sdt=dao.rs().getString("conn_sdt")==null?"":dao.rs().getString("conn_sdt");
+						
+						/*	String conn_edt 종료시간, */
 						conn_edt=dao.rs().getString("conn_edt")==null?"":dao.rs().getString("conn_edt");
 						
+						/*	String service_sdt, 반응시간 */
 						service_sdt=dao.rs().getString("service_sdt")==null?"":dao.rs().getString("service_sdt");
+						
+						/*	String safen 안심번호, */
 						safen=dao.rs().getString("safen")==null?"":dao.rs().getString("safen");
+						
+						/*	String safen_in 상점번호, */
 						safen_in=dao.rs().getString("safen_in")==null?"":dao.rs().getString("safen_in");
+						
+						/*	String calllog_rec_file	콜로그 녹음파일( */
 						safen_out=dao.rs().getString("safen_out")==null?"":dao.rs().getString("safen_out");
+						
+						/*	String status_cd 상태코드, */
 						calllog_rec_file=dao.rs().getString("calllog_rec_file")==null?"":dao.rs().getString("calllog_rec_file");
+						
+						/*	String status_cd 상태코드, */
 						service_sec=dao.rs().getInt("service_sec");
+						
+						/*	String status_cd 상태코드, */
 						call_hangup_dt=dao.rs().getString("service_sdt")==null?"":dao.rs().getString("service_sdt");
+						
+						/*	String status_cd 상태코드, */
 						st_dt=dao.rs().getString("conn_sdt")==null?"":dao.rs().getString("conn_sdt");
+						
+						/*	String status_cd 상태코드, */
 						ed_dt=dao.rs().getString("conn_edt")==null?"":dao.rs().getString("conn_edt");
 						
 						st_dt=chgDatetime(st_dt);
@@ -162,7 +185,7 @@ public class Safen_cmd_queue {
 						str_hangup_time=Integer.toString(service_sec);
 
 						/* cashq.store.callcnt 갱신*/
-						update_stcall(safen_in);
+						update_stcall(safen);
 						
 						/* 4-2. Store Info 조회 */
 						//store_info=getStoreInfo(safen_in);
@@ -241,9 +264,14 @@ public class Safen_cmd_queue {
 							usereventindex = get_user_event_index(mb_hp, biz_code);
 						}
 						
+							daily_st_dt=Utils.getyyyymmdd();
+							daily_ed_dt=Utils.add60day();
 						/* 4-12 */
 						if(is_freeuserpt&&usereventindex==0&&is_hp&&is_answer){
 							/* user_event 생성하기 */
+							daily_st_dt=Utils.getyyyymmdd();
+							daily_ed_dt=Utils.add60day();
+							eventcode=biz_code+"_1";
 							user_event_dt_index = set_user_event_dt(biz_code, mb_hp, daily_st_dt,daily_ed_dt,eventcode);
 						}else if(is_freeuserpt&&usereventindex>0){
 							/* user_event 조회하기 */
@@ -321,7 +349,8 @@ public class Safen_cmd_queue {
 								String ed_dt,
 								String tcl_seq,
 								String moddate,
-								String accdate
+								String accdate,
+								String ed_type
 							*/
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
@@ -329,7 +358,7 @@ public class Safen_cmd_queue {
 								ev_ed_dt, eventcode, mb_id, 
 								certi_code, st_dt, ed_dt, 
 								store_seq, str_tcl_seq, moddate, 
-								accdate);
+								accdate,ed_type);
 						}
 
 						/* freedailypt 7. 적립조건*/
@@ -347,11 +376,11 @@ public class Safen_cmd_queue {
 							/* 7-1 */
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
-								biz_code, call_hangup_dt, ev_st_dt, 
-								ev_ed_dt, eventcode, mb_id, 
+								biz_code, call_hangup_dt, daily_st_dt,
+								daily_ed_dt, eventcode, mb_id, 
 								certi_code, st_dt, ed_dt, 
 								store_seq, str_tcl_seq, moddate, 
-								accdate);
+								accdate,ed_type);
 						}
 
 
@@ -370,11 +399,11 @@ public class Safen_cmd_queue {
 							/* 8-1 */
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
-								biz_code, call_hangup_dt, ev_st_dt, 
-								ev_ed_dt, eventcode, mb_id, 
+								biz_code, call_hangup_dt, daily_st_dt, 
+								daily_ed_dt, eventcode, mb_id, 
 								certi_code, st_dt, ed_dt, 
 								store_seq, str_tcl_seq, moddate, 
-								accdate);
+								accdate,ed_type);
 						}
 
 
@@ -854,7 +883,8 @@ public class Safen_cmd_queue {
 		String store_seq,
 		String tcl_seq,
 		String moddate,
-		String accdate
+		String accdate,
+		String ed_type
 	) 
 	{
 
@@ -878,7 +908,8 @@ public class Safen_cmd_queue {
 		sb.append("tcl_seq=?,");
 		sb.append("store_seq=?,");
 		sb.append("moddate=?,");
-		sb.append("accdate=? ");
+		sb.append("accdate=?, ");
+		sb.append("ed_type=? ");
 /*
 *************************** 1. row ***************************
            seq: 945834
@@ -931,6 +962,7 @@ call_hangup_dt: 2016-07-22 18:13:16
 			dao.pstmt().setString(14, store_seq);
 			dao.pstmt().setString(15, moddate);
 			dao.pstmt().setString(16, accdate);
+			dao.pstmt().setString(17, ed_type);
 
 			//dao.pstmt().executeQuery();
 			dao.pstmt().executeUpdate();
@@ -1032,18 +1064,18 @@ call_hangup_dt: 2016-07-22 18:13:16
 	 * @param safen_in
 	 * @param retCode
 	 */
-	private static void update_stcall(String safen_in) {
+	private static void update_stcall(String safen) {
 
 		MyDataObject dao = new MyDataObject();
 		
 		try {
 			StringBuilder sb = new StringBuilder();
-			sb.append("UPDATE `cashq`.`store` SET callcnt=callcnt+1 where tel=?");
+			sb.append("UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?");
 
 			// status_cd 컬럼을 "i"<진행중>상태로 바꾼다.
 			dao.openPstmt(sb.toString());
 
-			dao.pstmt().setString(1, safen_in);
+			dao.pstmt().setString(1, safen);
 
 			int cnt = dao.pstmt().executeUpdate();
 
@@ -1233,7 +1265,8 @@ call_hangup_dt: 2016-07-22 18:13:16
 		MyDataObject dao = new MyDataObject();
 		sb.append("SELECT count(*) cnt FROM `cashq`.`0507_point` ");
 		sb.append("WHERE mb_hp=? ");
-		sb.append("AND date(insdate)=date(now()) ");
+//		sb.append("AND date(insdate)=date(now()) ");
+		sb.append("AND date(st_dt)=date(now()) ");
 		sb.append("AND status in ('1','2','3','4')");
 		try {
 			dao.openPstmt(sb.toString());

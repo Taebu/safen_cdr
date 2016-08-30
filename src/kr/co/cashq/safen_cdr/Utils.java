@@ -41,6 +41,9 @@ public class Utils {
 	private final static SimpleDateFormat sdf_YYYYMM = new SimpleDateFormat(
 			"yyyyMM");
 
+	private final static SimpleDateFormat sdf_yyyy_mm_dd = new SimpleDateFormat(
+			"yyyy-MM-dd");
+
 	private static String strHandler_pre = "";
 	private static Logger logger = null;
 	private static boolean checked_logs;
@@ -323,4 +326,15 @@ public class Utils {
 		return retVal;
 	}
 
+	/**
+	 * 8자리 날짜를 리턴한다. 예) 20160718
+	 * 
+	 * @return
+	 */
+	public static String getyyyymmdd() {
+		// 해당월의 값을 리턴한다.
+		Date now = new Date();
+		String strDate = sdf_yyyy_mm_dd.format(now);
+		return strDate;
+	}
 }
