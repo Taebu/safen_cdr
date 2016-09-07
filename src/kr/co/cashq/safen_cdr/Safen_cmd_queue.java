@@ -1644,16 +1644,23 @@ call_hangup_dt: 2016-07-22 18:13:16
 		boolean is_date=false;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try{
-		Date todayDate = new Date();
-		Date historyDate = sdf.parse(ev_st_dt);
-		Date futureDate = sdf.parse(ev_ed_dt);
 
-		/* 기간 이내 */
-		is_date=todayDate.after(historyDate)&&todayDate.before(futureDate);
-		
-		/* 이벤트 종료 시간과 같은 날 */
-		if(sdf.format(todayDate).equals(sdf.format(futureDate))){
-			is_date=true;
+		/* null check 하나라도 널이면 에러 */
+		if(ev_st_dt==null||ev_ed_dt==null){
+
+		}else{
+			Date todayDate = new Date();
+			
+			Date historyDate = sdf.parse(ev_st_dt);
+			Date futureDate = sdf.parse(ev_ed_dt);
+
+			/* 기간 이내 */
+			is_date=todayDate.after(historyDate)&&todayDate.before(futureDate);
+			
+			/* 이벤트 종료 시간과 같은 날 */
+			if(sdf.format(todayDate).equals(sdf.format(futureDate))){
+				is_date=true;
+			}		
 		}
 		
 		}catch(ParseException e){
