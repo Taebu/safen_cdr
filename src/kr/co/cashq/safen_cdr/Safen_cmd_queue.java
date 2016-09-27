@@ -55,6 +55,8 @@ public class Safen_cmd_queue {
 		boolean is_hp = false;
 		boolean is_freedailypt = false;
 		boolean is_freeuserpt = false;
+		boolean is_fivept = false;
+
 		boolean is_realcode=false;
 		boolean is_userpt=false;
 		boolean chk_realcode=false;
@@ -264,6 +266,9 @@ public class Safen_cmd_queue {
 						/* 4-10 */
 						is_freeuserpt = is_freeuserpt(ed_type);
 						
+						/* 4-10-1 */
+						is_fivept=is_fivept(ed_type);
+
 						/* 4-11 */
 						if(is_freeuserpt){
 							usereventindex = get_user_event_index(mb_hp, biz_code);
@@ -278,7 +283,7 @@ public class Safen_cmd_queue {
 							daily_ed_dt=Utils.add60day();
 							eventcode=biz_code+"_1";
 							user_event_dt_index = set_user_event_dt(biz_code, mb_hp, daily_st_dt,daily_ed_dt,eventcode);
-						}else if(is_freeuserpt&&usereventindex>0){
+						}else if(is_freeuserpt&&usereventindex>0&&is_hp&&is_answer){
 							/* user_event 조회하기 */
 							user_event_info = get_userevent(biz_code, mb_hp);
 							/**
@@ -286,9 +291,17 @@ public class Safen_cmd_queue {
 							* user_event_info[1]=ev_ed_dt;
 							* user_event_info[2]=eventcode;
 							*/
-							daily_st_dt=user_event_info[0];
-							daily_ed_dt=user_event_info[1];
-							eventcode=user_event_info[2];
+							if(is_datepoint(user_event_info[0],user_event_info[1])){
+								daily_st_dt=user_event_info[0];
+								daily_ed_dt=user_event_info[1];
+								eventcode=user_event_info[2];
+							}else{
+								daily_st_dt=Utils.getyyyymmdd();
+								daily_ed_dt=Utils.add60day();
+								eventcode=chg_userevent(user_event_info[2]);
+								user_event_dt_index = set_user_event_dt(biz_code, mb_hp, daily_st_dt,daily_ed_dt,eventcode);
+							
+							}
 						}
 						}/* if(biz_code!=null||biz_code!=""){ ... } */
 						/*
@@ -337,9 +350,8 @@ public class Safen_cmd_queue {
 							&&daycnt==0
 							&&eventcnt<pt_event_cnt
 							&&is_hp
+							&&is_fivept
 							&&is_answer
-							&&!is_freedailypt
-							&&!is_freeuserpt
 							&&chk_realcode
 						){
 							/* 6-1 
@@ -369,10 +381,7 @@ public class Safen_cmd_queue {
 								accdate,ed_type,type,
 								tel,pre_pay,pt_stat);
 			
-						}
-
-						/* freedailypt 7. 적립조건*/
-						if(is_point(pre_pay)
+						}else if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
 							&&daycnt==0
@@ -380,9 +389,12 @@ public class Safen_cmd_queue {
 							&&is_hp
 							&&is_answer
 							&&is_freedailypt
-							&&!is_freeuserpt
 							&&chk_realcode
 						){
+							/* freedailypt 7. 적립조건*/
+							daily_st_dt=Utils.getyyyymmdd();
+							daily_ed_dt=Utils.add60day();
+
 							/* 7-1 */
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
@@ -392,21 +404,17 @@ public class Safen_cmd_queue {
 								store_seq, str_tcl_seq, moddate, 
 								accdate,ed_type,type,
 								tel,pre_pay,pt_stat);
-						}
-
-
-						/* freeuserpt 8. 적립조건*/
-						if(is_point(pre_pay)
+						}else if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
 							&&daycnt==0
 							&&eventcnt<pt_event_cnt
 							&&is_hp
 							&&is_answer
-							&&!is_freedailypt
 							&&is_freeuserpt
 							&&chk_realcode
 						){
+							/* freeuserpt 8. 적립조건*/
 							/* 8-1 */
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
@@ -866,8 +874,8 @@ public class Safen_cmd_queue {
 	* @param  hangup_time,
 	* @param  biz_code,
 	* @param  call_hangup_dt,
-	* @param  ev_st_dt,
-	* @param  ev_ed_dt,
+	* @param  pev_st_dt,
+	* @param  pev_ed_dt,
 	* @param  eventcode,
 	* @param  mb_id,
 	* @param  certi_code,
@@ -890,8 +898,8 @@ public class Safen_cmd_queue {
 		String hangup_time,
 		String biz_code,
 		String call_hangup_dt,
-		String ev_st_dt,
-		String ev_ed_dt,
+		String pev_st_dt,
+		String pev_ed_dt,
 		String eventcode,
 		String mb_id,
 		String certi_code,
@@ -978,8 +986,8 @@ call_hangup_dt: 2016-07-22 18:13:16
 			dao.pstmt().setString(3, hangup_time);
 			dao.pstmt().setString(4, biz_code);
 			dao.pstmt().setString(5, call_hangup_dt);
-			dao.pstmt().setString(6, ev_st_dt);
-			dao.pstmt().setString(7, ev_ed_dt);
+			dao.pstmt().setString(6, pev_st_dt);
+			dao.pstmt().setString(7, pev_ed_dt);
 			dao.pstmt().setString(8, eventcode);
 			dao.pstmt().setString(9, mb_id);
 			dao.pstmt().setString(10, certi_code);
@@ -1346,8 +1354,8 @@ call_hangup_dt: 2016-07-22 18:13:16
 	private static boolean is_freedailypt(String ed_type){
 		boolean retVal=false;
 		if(ed_type!=null){
-			if(ed_type.length()>=10){
-				retVal = ed_type.substring(0,10).equals("freedailypt");
+			if(ed_type.length()>=11){
+				retVal = ed_type.substring(0,11).equals("freedailypt");
 			}
 		}
 		return retVal;
@@ -1369,7 +1377,22 @@ call_hangup_dt: 2016-07-22 18:13:16
 		return retVal;
 	}
 
-
+	/**
+	* boolean is_fivept
+	* @param ed_type
+	* @return boolean
+	*/
+	private static boolean is_fivept(String ed_type){
+		boolean retVal=false;
+		if(ed_type!=null){
+			if(ed_type.length()>=6){
+				retVal = ed_type.substring(0,6).equals("fivept");
+			}else{
+				retVal = ed_type.equals("");
+			}
+		}
+		return retVal;
+	}
 
 	/**
 	* int get_user_event_index
@@ -1697,6 +1720,16 @@ call_hangup_dt: 2016-07-22 18:13:16
 		}
 
 			return retVal; 
+	}
+
+	private static String chg_userevent(String eventcode) {
+		String retVal="";
+		String[] explode=eventcode.split("\\_");
+		int up_usercnt=Integer.parseInt(explode[1]);
+		up_usercnt++;
+
+		retVal=explode[0]+"_"+up_usercnt;
+		return retVal;
 	}
 
 }
