@@ -10,9 +10,11 @@ import java.util.Arrays;
 //import com.nostech.safen.SafeNo;
 
 /**
+
  * safen_cmd_queue 테이블 관련 객체
- * @author pgs
- *
+ * @author mtb
+ * 2016-10-27 (목) 오전 10:42
+ *  - 
  */
 public class Safen_cmd_queue {
 	
@@ -1651,7 +1653,7 @@ call_hangup_dt: 2016-07-22 18:13:16
 		boolean retVal=false;
 		
 		if(pre_pay!=null){
-			retVal = pre_pay.equals("gl")||pre_pay.equals("sl")||pre_pay.equals("on");
+			retVal = pre_pay.equals("gl")||pre_pay.equals("sl")||pre_pay.equals("on")||pre_pay.equals("br");
 		}
 		
 		return retVal;
