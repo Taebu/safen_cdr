@@ -326,6 +326,20 @@ public class Utils {
 		return retVal;
 	}
 
+
+	/**
+	* String add60day
+	* @return String "yyyy-MM-dd" + INTERVAL 60 DAY
+	*/
+	public static String add90day(){
+		String retVal="";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 90); // Adding 60 days
+		retVal = sdf.format(c.getTime());
+		return retVal;
+	}
 	/**
 	 * 8자리 날짜를 리턴한다. 예) 20160718
 	 * 

@@ -28,6 +28,7 @@ public class Safen_cmd_queue {
 		String ev_ed_dt="";
 		String daily_st_dt="";
 		String daily_ed_dt="";
+		String review_ed_dt="";
 		String mb_hp="";
 		String eventcode="";
 		String cash="";
@@ -46,6 +47,9 @@ public class Safen_cmd_queue {
 
 		int eventcnt = 0;
 		int daycnt = 0;
+		int reviewdaycnt = 0;
+		int downdaycnt = 0;
+		int calldaycnt = 0;
 		int pt_day_cnt = 0;
 		int pt_event_cnt = 0;
 		int usereventindex = 0;
@@ -58,6 +62,9 @@ public class Safen_cmd_queue {
 		boolean is_freedailypt = false;
 		boolean is_freeuserpt = false;
 		boolean is_fivept = false;
+		boolean is_callpt = false;
+		boolean is_reviewpt = false;
+		boolean is_downpt = false;
 
 		boolean is_realcode=false;
 		boolean is_userpt=false;
@@ -92,7 +99,7 @@ public class Safen_cmd_queue {
 			MyDataObject dao3 = new MyDataObject();
 			MyDataObject dao4 = new MyDataObject();
 			MyDataObject dao5 = new MyDataObject();
-;
+
 			StringBuilder sb = new StringBuilder();
 			StringBuilder sb_log = new StringBuilder();
 
@@ -239,8 +246,10 @@ public class Safen_cmd_queue {
 						}
 
 						/** 
-						* 4-4. 이벤트 갯수 카운트
-						* 4-5. 하루 포인트 한번 포인트 여부
+						* 4-4. 이벤트 갯수 카운트&amp;
+						* 4-5-1. call 하루 포인트 한번 포인트 여부
+						* 4-5-2. reviewpt 하루 포인트 한번 포인트 여부
+						* 4-5-2. 하루 포인트 한번 포인트 여부
 						* 4-6. 핸드폰 번호 여부
 						* 4-7. 포인트 재적립 시간 여부 단위
 						*      point_event_dt, pt_event_cnt
@@ -257,8 +266,8 @@ public class Safen_cmd_queue {
 						eventcnt = get_eventcnt(mb_hp,eventcode);
 
 						/* 4-5 */
-						daycnt = get_daycnt(mb_hp);
-
+						String[] yourArray = new String[] {"reviewpt","downpt"};
+						
 						/* 4-6 */
 						is_hp = is_hp(safen_out);
 
@@ -267,17 +276,32 @@ public class Safen_cmd_queue {
 						
 						/* 4-10 */
 						is_freeuserpt = is_freeuserpt(ed_type);
-						
+
 						/* 4-10-1 */
 						is_fivept=is_fivept(ed_type);
+						/* 4-10-2 */
+						is_reviewpt=is_reviewpt(ed_type);
+						/* 4-10-3 */
+						is_downpt=is_downpt(ed_type);
 
+						is_callpt=Arrays.asList(yourArray).contains(ed_type);
+						if(is_callpt){
+						calldaycnt = get_daycnt(mb_hp,"callpt");
+						}else if(is_reviewpt){
+						reviewdaycnt = get_daycnt(mb_hp,"reviewpt");
+						}else if(is_downpt){
+						downdaycnt = get_daycnt(mb_hp,"downpt");
+						}
+						
+						daily_st_dt=Utils.getyyyymmdd();
+						daily_ed_dt=Utils.add60day();
+						review_ed_dt=Utils.add90day();
+						
 						/* 4-11 */
 						if(is_freeuserpt){
 							usereventindex = get_user_event_index(mb_hp, biz_code);
 						}
 						
-							daily_st_dt=Utils.getyyyymmdd();
-							daily_ed_dt=Utils.add60day();
 						/* 4-12 */
 						if(is_freeuserpt&&usereventindex==0&&is_hp&&is_answer){
 							/* user_event 생성하기 */
@@ -288,11 +312,6 @@ public class Safen_cmd_queue {
 						}else if(is_freeuserpt&&usereventindex>0&&is_hp&&is_answer){
 							/* user_event 조회하기 */
 							user_event_info = get_userevent(biz_code, mb_hp);
-							/**
-							* user_event_info[0]=ev_st_dt;
-							* user_event_info[1]=ev_ed_dt;
-							* user_event_info[2]=eventcode;
-							*/
 							if(is_datepoint(user_event_info[0],user_event_info[1])){
 								daily_st_dt=user_event_info[0];
 								daily_ed_dt=user_event_info[1];
@@ -306,41 +325,6 @@ public class Safen_cmd_queue {
 							}
 						}
 						}/* if(biz_code!=null||biz_code!=""){ ... } */
-						/*
-						sb_log.append("mb_hp : ");
-						sb_log.append(mb_hp);
-						sb_log.append("store_name : ");
-						sb_log.append(store_name);
-						sb_log.append("str_hangup_time : ");
-						sb_log.append(str_hangup_time);
-						sb_log.append("biz_code : ");
-						sb_log.append(biz_code);
-						sb_log.append("call_hangup_dt : ");
-						sb_log.append(call_hangup_dt);
-						sb_log.append("ev_st_dt :");
-						sb_log.append(ev_st_dt);
-						sb_log.append("ev_ed_dt : ");
-						sb_log.append(ev_ed_dt);
-						sb_log.append("eventcode : ");
-						sb_log.append(eventcode);
-						sb_log.append("mb_id : ");
-						sb_log.append(mb_id);
-						sb_log.append("certi_code : ");
-						sb_log.append(certi_code);
-						sb_log.append("st_dt : ");
-						sb_log.append(st_dt);
-						sb_log.append("ed_dt : ");
-						sb_log.append(ed_dt);
-						sb_log.append("store_seq : ");
-						sb_log.append(store_seq);
-						sb_log.append("str_tcl_seq : ");
-						sb_log.append(str_tcl_seq);
-						sb_log.append("moddate : ");
-						sb_log.append(moddate);
-						sb_log.append("accdate : ");
-						sb_log.append(accdate);
-						Utils.getLogger().warning(sb_log.toString());
-						*/
 
 						/* 4-13 */
 						pt_stat=chk_pt5(ed_type);
@@ -349,31 +333,13 @@ public class Safen_cmd_queue {
 						if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
-							&&daycnt==0
+							&&calldaycnt==0
 							&&eventcnt<pt_event_cnt
 							&&is_hp
 							&&is_fivept
 							&&is_answer
 							&&chk_realcode
 						){
-							/* 6-1 
-								String mb_hp, 
-								String store_name, 
-								String hangup_time,
-								String biz_code,
-								String call_hangup_dt,
-								String ev_st_dt,
-								String ev_ed_dt,
-								String eventcode,
-								String mb_id,
-								String certi_code,
-								String st_dt,
-								String ed_dt,
-								String tcl_seq,
-								String moddate,
-								String accdate,
-								String ed_type
-							*/
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
 								biz_code, call_hangup_dt, ev_st_dt, 
@@ -386,7 +352,7 @@ public class Safen_cmd_queue {
 						}else if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
-							&&daycnt==0
+							&&calldaycnt==0
 							&&eventcnt<pt_event_cnt
 							&&is_hp
 							&&is_answer
@@ -409,7 +375,7 @@ public class Safen_cmd_queue {
 						}else if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
-							&&daycnt==0
+							&&calldaycnt==0
 							&&eventcnt<pt_event_cnt
 							&&is_hp
 							&&is_answer
@@ -426,7 +392,47 @@ public class Safen_cmd_queue {
 								store_seq, str_tcl_seq, moddate, 
 								accdate,ed_type,type,
 								tel,pre_pay,pt_stat);
-						}
+						}else if(is_point(pre_pay)
+								&&service_sec>9
+								&&is_datepoint(ev_st_dt,ev_ed_dt)
+								&&reviewdaycnt==0
+								&&eventcnt<pt_event_cnt
+								&&is_hp
+								&&is_answer
+								&&is_reviewpt
+								&&chk_realcode
+							){
+								/* reviewpt 9. 적립조건*/
+								/* 9-1 */
+								set_0507_point(
+									mb_hp,store_name, str_hangup_time, 
+									biz_code, call_hangup_dt, daily_st_dt, 
+									review_ed_dt, eventcode, mb_id, 
+									certi_code, st_dt, ed_dt, 
+									store_seq, str_tcl_seq, moddate, 
+									accdate,ed_type,type,
+									tel,pre_pay,pt_stat);
+							}else if(is_point(pre_pay)
+									&&service_sec>9
+									&&is_datepoint(ev_st_dt,ev_ed_dt)
+									&&downdaycnt==0
+									&&eventcnt<pt_event_cnt
+									&&is_hp
+									&&is_answer
+									&&is_downpt
+									&&chk_realcode
+								){
+									/* downpt 10. 적립조건*/
+									/* 10-1 */
+									set_0507_point(
+										mb_hp,store_name, str_hangup_time, 
+										biz_code, call_hangup_dt, daily_st_dt, 
+										daily_ed_dt, eventcode, mb_id, 
+										certi_code, st_dt, ed_dt, 
+										store_seq, str_tcl_seq, moddate, 
+										accdate,ed_type,type,
+										tel,pre_pay,pt_stat);
+								}
 
 
 						sb2.append("insert into ");
@@ -1299,19 +1305,26 @@ call_hangup_dt: 2016-07-22 18:13:16
 	* @param mb_hp
 	* @return int
 	*/
-	private static int get_daycnt(String mb_hp){
+	private static int get_daycnt(String mb_hp,String ed_type){
 		int retVal = 0;
 		StringBuilder sb = new StringBuilder();
 
 		MyDataObject dao = new MyDataObject();
 		sb.append("SELECT count(*) cnt FROM `cashq`.`0507_point` ");
 		sb.append("WHERE mb_hp=? ");
-//		sb.append("AND date(insdate)=date(now()) ");
 		sb.append("AND date(st_dt)=date(now()) ");
-		sb.append("AND status in ('1','2','3','4')");
+		sb.append("AND status in ('1','2','3','4') ");
+		if(ed_type.equals("callpt")){
+			sb.append(" AND ed_type not in ('downpt','reviewpt') ");
+		}else if(ed_type.equals("reviewpt")){
+			sb.append("  AND ed_type='reviewpt' ");
+		}else if(ed_type.equals("downpt")){
+			sb.append(" AND ed_type='downpt' ");
+		} 
 		try {
 			dao.openPstmt(sb.toString());
 			dao.pstmt().setString(1, mb_hp);
+			
 			
 			dao.setRs (dao.pstmt().executeQuery());
 
@@ -1389,6 +1402,38 @@ call_hangup_dt: 2016-07-22 18:13:16
 		if(ed_type!=null){
 			if(ed_type.length()>=6){
 				retVal = ed_type.substring(0,6).equals("fivept");
+			}else{
+				retVal = ed_type.equals("");
+			}
+		}
+		return retVal;
+	}
+	/**
+	* boolean is_fivept
+	* @param ed_type
+	* @return boolean
+	*/
+	private static boolean is_downpt(String ed_type){
+		boolean retVal=false;
+		if(ed_type!=null){
+			if(ed_type.length()>=6){
+				retVal = ed_type.substring(0,6).equals("downpt");
+			}else{
+				retVal = ed_type.equals("");
+			}
+		}
+		return retVal;
+	}
+	/**
+	* boolean is_fivept
+	* @param ed_type
+	* @return boolean
+	*/
+	private static boolean is_reviewpt(String ed_type){
+		boolean retVal=false;
+		if(ed_type!=null){
+			if(ed_type.length()>=8){
+				retVal = ed_type.substring(0,8).equals("reviewpt");
 			}else{
 				retVal = ed_type.equals("");
 			}
