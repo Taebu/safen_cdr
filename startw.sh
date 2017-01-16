@@ -3,4 +3,4 @@
 /home/point/safen_cdr/stop.sh >>"/home/point/safen_cdr/killme.txt"
 ping 127.0.0.1 -c 4
 ps -ef | grep safen_cdr/bin | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
-/home/java/bin/java -Dfile.encoding=UTF-8 -classpath ".:/home/point/safen_cdr/bin:/home/point/safen_cdr/libs/mysql-connector-java-5.1.35.jar:/home/sktl/point/safen_cdr/log4j-1.2.17.jar" kr.co.cashq.safen_cdr.SAFEN_CDR /home/point/safen_cdr 1>/dev/null 2>&1 &
+/home/java/bin/java -Dfile.encoding=UTF-8 -classpath ".:/home/point/safen_cdr/bin:/home/point/safen_cdr/libs/mysql-connector-java-5.1.35.jar:/home/point/safen_cdr/libs/log4j-1.2.17.jar" kr.co.cashq.safen_cdr.SAFEN_CDR /home/point/safen_cdr 1>/dev/null 2>&1 &

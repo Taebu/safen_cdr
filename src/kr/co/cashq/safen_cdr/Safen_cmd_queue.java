@@ -266,7 +266,9 @@ public class Safen_cmd_queue {
 						eventcnt = get_eventcnt(mb_hp,eventcode);
 
 						/* 4-5 */
-						String[] yourArray = new String[] {"reviewpt","downpt"};
+						//String[] callArray = new String[] {"reviewpt","downpt"};
+						String[] callArray = new String[] {"'fivept","freedailypt","freeuserpt","freept"};
+						String[] reviewArray = new String[] {"reviewpt","downpt"};
 						
 						/* 4-6 */
 						is_hp = is_hp(safen_out);
@@ -284,7 +286,8 @@ public class Safen_cmd_queue {
 						/* 4-10-3 */
 						is_downpt=is_downpt(ed_type);
 
-						is_callpt=Arrays.asList(yourArray).contains(ed_type);
+						is_callpt=Arrays.asList(callArray).contains(ed_type);
+						
 						if(is_callpt){
 						calldaycnt = get_daycnt(mb_hp,"callpt");
 						}else if(is_reviewpt){
@@ -362,6 +365,7 @@ public class Safen_cmd_queue {
 							/* freedailypt 7. 적립조건*/
 							daily_st_dt=Utils.getyyyymmdd();
 							daily_ed_dt=Utils.add60day();
+							
 
 							/* 7-1 */
 							set_0507_point(
