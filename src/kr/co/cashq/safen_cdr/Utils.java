@@ -292,8 +292,11 @@ public class Utils {
 	  try{
 		  String dateString = str;
 		  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	  
 		  Date date = dateFormat.parse(dateString);
 		  unixTime = (long)date.getTime()/1000;
+		  
+		  
 
 	  }catch (ParseException e) {
 			e.printStackTrace();
@@ -340,10 +343,9 @@ public class Utils {
 		retVal = sdf.format(c.getTime());
 		return retVal;
 	}
-	/**
-	 * 8자리 날짜를 리턴한다. 예) 20160718
-	 * 
-	 * @return
+	/** getyyyymmdd()
+	 * 12자리 날짜를 리턴한다. 예) 2016-07-18
+	 * @return String.format("yyyy-MM-dd")
 	 */
 	public static String getyyyymmdd() {
 		// 해당월의 값을 리턴한다.

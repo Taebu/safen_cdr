@@ -2,10 +2,11 @@ package kr.co.cashq.safen_cdr;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Arrays;
+import java.util.Date;
 
 //import com.nostech.safen.SafeNo;
 
@@ -13,8 +14,8 @@ import java.util.Arrays;
 
  * safen_cmd_queue 테이블 관련 객체
  * @author mtb
- * 2016-10-27 (목) 오전 10:42
- *  - 
+ * 2017-03-10 (금) 13:36:49 
+ *  리뷰 포인트 90일 60일로 변경
  */
 public class Safen_cmd_queue {
 	
@@ -108,7 +109,7 @@ public class Safen_cmd_queue {
 			//sb.append("select * from safen_cdr where seq<192 limit 1;");
 			//sb.append("select * from safen_cdr where seq<221 limit 1;");
 			//sb.append("select * from safen_cdr limit 1;");
-			sb.append("select * from safen_cdr order by seq limit 1;");
+			sb.append("select * from sktl.safen_cdr order by seq limit 1;");
 			
 			try {
 				dao.openPstmt(sb.toString());
@@ -125,69 +126,43 @@ public class Safen_cmd_queue {
 						StringBuilder sb5 = new StringBuilder();
 						String hist_table = DBConn.isExistTableYYYYMM();
 						int resultCnt2 = 0;
-						/*
-						*/
-						/**
-						*   select conn_sdt,service_sdt,conn_edt,status_cd from safen_cdr;
-							
-							public static int set_TB_CALL_LOG(
-							String status_cd 상태코드,
-								po_status
-							String conn_sdt 시작시간, 
-								start_dt
-							String conn_edt 종료시간,
-								end_dt
-							String service_sdt, 반응시간
-								called_hangup_dt
-							String safen 안심번호,
-								virtual_num
-							String safen_in 상점번호,
-								called_num
-							String safen_out 고객번호,
-								caller_num
-							String calllog_rec_file	콜로그 녹음파일(
-								userfield
-							int service_sec	서비스 제공시간(단위 :초)(
-								userfield
-								) 
-						*/
 
 						/*	String status_cd 상태코드, */
-						status_cd=dao.rs().getString("status_cd")==null?"":dao.rs().getString("status_cd");
+						status_cd=chkValue(dao.rs().getString("status_cd"));
 						
 						/*	String conn_sdt 시작시간,  */
-						conn_sdt=dao.rs().getString("conn_sdt")==null?"":dao.rs().getString("conn_sdt");
+						conn_sdt=chkValue(dao.rs().getString("conn_sdt"));
 						
 						/*	String conn_edt 종료시간, */
-						conn_edt=dao.rs().getString("conn_edt")==null?"":dao.rs().getString("conn_edt");
+						conn_edt=chkValue(dao.rs().getString("conn_edt"));
 						
 						/*	String service_sdt, 반응시간 */
-						service_sdt=dao.rs().getString("service_sdt")==null?"":dao.rs().getString("service_sdt");
+						service_sdt=chkValue(dao.rs().getString("service_sdt"));
 						
 						/*	String safen 안심번호, 050 */
-						safen=dao.rs().getString("safen")==null?"":dao.rs().getString("safen");
+						safen=chkValue(dao.rs().getString("safen"));
 						tel=safen;
 
 						/*	String safen_in 상점번호, */
-						safen_in=dao.rs().getString("safen_in")==null?"":dao.rs().getString("safen_in");
+						safen_in=chkValue(dao.rs().getString("safen_in"));
 						
 						/*	String calllog_rec_file	콜로그 녹음파일( */
-						safen_out=dao.rs().getString("safen_out")==null?"":dao.rs().getString("safen_out");
+						safen_out=chkValue(dao.rs().getString("safen_out"));
 						
 						/*	String status_cd 상태코드, */
-						calllog_rec_file=dao.rs().getString("calllog_rec_file")==null?"":dao.rs().getString("calllog_rec_file");
+						calllog_rec_file=chkValue(dao.rs().getString("calllog_rec_file"));
 						
 						/*	String status_cd 상태코드, */
 						service_sec=dao.rs().getInt("service_sec");
 						
 						/*	String status_cd 상태코드, */
-						call_hangup_dt=dao.rs().getString("service_sdt")==null?"":dao.rs().getString("service_sdt");
+						call_hangup_dt=chkValue(dao.rs().getString("service_sdt"));
 						
 						/*	String status_cd 상태코드, */
-						st_dt=dao.rs().getString("conn_sdt")==null?"":dao.rs().getString("conn_sdt");
+						st_dt=chkValue(dao.rs().getString("conn_sdt"));
 						
 						/*	String status_cd 상태코드, */
-						ed_dt=dao.rs().getString("conn_edt")==null?"":dao.rs().getString("conn_edt");
+						ed_dt=chkValue(dao.rs().getString("conn_edt"));
 						
 						st_dt=chgDatetime(st_dt);
 						ed_dt=chgDatetime(ed_dt);
@@ -267,7 +242,7 @@ public class Safen_cmd_queue {
 
 						/* 4-5 */
 						//String[] callArray = new String[] {"reviewpt","downpt"};
-						String[] callArray = new String[] {"'fivept","freedailypt","freeuserpt","freept"};
+						String[] callArray = new String[] {"fivept","freedailypt","freeuserpt","freept"};
 						String[] reviewArray = new String[] {"reviewpt","downpt"};
 						
 						/* 4-6 */
@@ -281,30 +256,38 @@ public class Safen_cmd_queue {
 
 						/* 4-10-1 */
 						is_fivept=is_fivept(ed_type);
+						
+						
 						/* 4-10-2 */
 						is_reviewpt=is_reviewpt(ed_type);
 						/* 4-10-3 */
 						is_downpt=is_downpt(ed_type);
 
 						is_callpt=Arrays.asList(callArray).contains(ed_type);
+
+
 						
 						if(is_callpt){
-						calldaycnt = get_daycnt(mb_hp,"callpt");
+						//calldaycnt = get_daycnt(mb_hp,"callpt");
+						calldaycnt = get_checkpoint("callpt",mb_hp);
 						}else if(is_reviewpt){
-						reviewdaycnt = get_daycnt(mb_hp,"reviewpt");
+						reviewdaycnt = get_checkpoint("reviewpt",mb_hp);
 						}else if(is_downpt){
-						downdaycnt = get_daycnt(mb_hp,"downpt");
+						downdaycnt =  get_checkpoint("downpt",mb_hp);
 						}
+
+						
 						
 						daily_st_dt=Utils.getyyyymmdd();
 						daily_ed_dt=Utils.add60day();
-						review_ed_dt=Utils.add90day();
+						//review_ed_dt=Utils.add90day();
+						review_ed_dt=Utils.add60day();
 						
 						/* 4-11 */
 						if(is_freeuserpt){
 							usereventindex = get_user_event_index(mb_hp, biz_code);
 						}
-						
+						 
 						/* 4-12 */
 						if(is_freeuserpt&&usereventindex==0&&is_hp&&is_answer){
 							/* user_event 생성하기 */
@@ -342,6 +325,7 @@ public class Safen_cmd_queue {
 							&&is_fivept
 							&&is_answer
 							&&chk_realcode
+							&&is_callpt
 						){
 							set_0507_point(
 								mb_hp,store_name, str_hangup_time, 
@@ -351,7 +335,8 @@ public class Safen_cmd_queue {
 								store_seq, str_tcl_seq, moddate, 
 								accdate,ed_type,type,
 								tel,pre_pay,pt_stat);
-			
+							
+							set_checkpoint("callpt",mb_hp);
 						}else if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
@@ -361,6 +346,7 @@ public class Safen_cmd_queue {
 							&&is_answer
 							&&is_freedailypt
 							&&chk_realcode
+							&&is_callpt
 						){
 							/* freedailypt 7. 적립조건*/
 							daily_st_dt=Utils.getyyyymmdd();
@@ -376,6 +362,8 @@ public class Safen_cmd_queue {
 								store_seq, str_tcl_seq, moddate, 
 								accdate,ed_type,type,
 								tel,pre_pay,pt_stat);
+							
+							set_checkpoint("callpt",mb_hp);
 						}else if(is_point(pre_pay)
 							&&service_sec>9
 							&&is_datepoint(ev_st_dt,ev_ed_dt)
@@ -385,6 +373,7 @@ public class Safen_cmd_queue {
 							&&is_answer
 							&&is_freeuserpt
 							&&chk_realcode
+							&&is_callpt
 						){
 							/* freeuserpt 8. 적립조건*/
 							/* 8-1 */
@@ -396,6 +385,8 @@ public class Safen_cmd_queue {
 								store_seq, str_tcl_seq, moddate, 
 								accdate,ed_type,type,
 								tel,pre_pay,pt_stat);
+							
+							set_checkpoint("callpt",mb_hp);
 						}else if(is_point(pre_pay)
 								&&service_sec>9
 								&&is_datepoint(ev_st_dt,ev_ed_dt)
@@ -416,6 +407,8 @@ public class Safen_cmd_queue {
 									store_seq, str_tcl_seq, moddate, 
 									accdate,ed_type,type,
 									tel,pre_pay,pt_stat);
+								
+								set_checkpoint("reviewpt",mb_hp);
 							}else if(is_point(pre_pay)
 									&&service_sec>9
 									&&is_datepoint(ev_st_dt,ev_ed_dt)
@@ -436,13 +429,16 @@ public class Safen_cmd_queue {
 										store_seq, str_tcl_seq, moddate, 
 										accdate,ed_type,type,
 										tel,pre_pay,pt_stat);
+									
+									set_checkpoint("downpt",mb_hp);
 								}
+						
 
 
-						sb2.append("insert into ");
+						sb2.append("insert into sktl.");
 						sb2.append(hist_table);
 						/* 처리가 진행중인것은 포함하지 않는다. */
-						sb2.append(" select * from safen_cdr where seq=?");
+						sb2.append(" select * from sktl.safen_cdr where seq=?");
 						
 						// insert into safen_cmd_hist_201607 select * from
 						// safen_cmd_queue where status_cd != ''
@@ -459,7 +455,7 @@ public class Safen_cmd_queue {
 						StringBuilder sb3 = new StringBuilder();
 
 						/* 처리가 진행중인것은 지우지 않는다. */
-						sb3.append("delete from safen_cdr where seq=?");
+						sb3.append("delete from sktl.safen_cdr where seq=?");
 				
 						// insert into safen_cmd_hist_201607 select * from
 						// safen_cmd_queue where status_cd != ''
@@ -778,29 +774,6 @@ public class Safen_cmd_queue {
 		StringBuilder sb2 = new StringBuilder();
 		MyDataObject dao = new MyDataObject();
 		MyDataObject dao2 = new MyDataObject();
-		/*
-		Table: TB_CALL_LOG
-		Create Table: CREATE TABLE `TB_CALL_LOG` (
-		  `seq` int(11) NOT NULL AUTO_INCREMENT,
-		  `SVC_ID` varchar(4) DEFAULT NULL,
-		  `START_DT` datetime DEFAULT NULL,
-		  `END_DT` datetime DEFAULT NULL,
-		  `CALLED_HANGUP_DT` datetime DEFAULT NULL,
-		  `CALLER_NUM` varchar(16) DEFAULT NULL,
-		  `CALLED_NUM` varchar(16) DEFAULT NULL,
-		  `VIRTUAL_NUM` varchar(16) DEFAULT NULL,
-		  `REASON_CD` varchar(16) DEFAULT NULL,
-		  `REG_DT` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-		  `userfield` varchar(255) DEFAULT NULL,
-		  `biz_code` varchar(20) DEFAULT NULL,
-		  `po_status` enum('0','1','2','3','4','5','6','99') NOT NULL DEFAULT '0',
-		  PRIMARY KEY (`seq`)
-		) ENGINE=MyISAM AUTO_INCREMENT=3143353 DEFAULT CHARSET=utf8
-		1 row in set (0.00 sec)
-
-		ERROR:
-		*/
-
 		sb.append("INSERT INTO `cashq`.`TB_CALL_LOG` SET ");
 		sb.append("SVC_ID='81',");
 		sb.append("START_DT=?,");
@@ -1302,7 +1275,6 @@ call_hangup_dt: 2016-07-22 18:13:16
 		}
 
 		return retVal;
-
 	}
 	/**
 	* int get_daycnt
@@ -1325,8 +1297,12 @@ call_hangup_dt: 2016-07-22 18:13:16
 		}else if(ed_type.equals("downpt")){
 			sb.append(" AND ed_type='downpt' ");
 		} 
+		
 		try {
 			dao.openPstmt(sb.toString());
+			
+			//Utils.getLogger().warning(sb.toString());
+			
 			dao.pstmt().setString(1, mb_hp);
 			
 			
@@ -1761,6 +1737,24 @@ call_hangup_dt: 2016-07-22 18:13:16
 	}
 
 
+    /**
+     * chkValue
+	 *  데이터 유효성 null 체크에 대한 값을 "" 로 리턴한다.
+     * @param str
+     * @return String
+     */
+	public static String chkValue(String str)
+	{
+		String retVal="";
+
+		try{
+				retVal=str==null?"":str;
+		}catch(NullPointerException e){
+			
+		}
+		return retVal;
+	}
+	
 	public static String chk_pt5(String str)
 	{
 		String retVal="pt5";
@@ -1782,5 +1776,124 @@ call_hangup_dt: 2016-07-22 18:13:16
 		retVal=explode[0]+"_"+up_usercnt;
 		return retVal;
 	}
+	
+	/**
+	 * 
+	 * @param dateString
+	 * @return
+	 */
+	private static long from_unixtime(String dateString)
+	{	
+		//String dateString = "2017-01-25 20:56:00";
+	
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date;
+		long unixTime =0L;
+		try {
+			date = dateFormat.parse(dateString);
+			unixTime = (long) date.getTime()/1000;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return unixTime;
+	}
 
+
+
+	/**
+	 * set_checkpoint
+	 * @param cp_type
+	 * @param cp_hp
+	 * @return
+	 */
+	public static int set_checkpoint(String cp_type,String cp_hp) 
+	{
+		boolean retVal = false;
+		int last_id = 0;
+		long unixtime=0L;
+		unixtime=System.currentTimeMillis() / 1000;
+		StringBuilder sb = new StringBuilder();
+		MyDataObject dao = new MyDataObject();
+		sb.append("INSERT INTO `cashq`.`check_point` SET ");
+		sb.append("cp_date=?,");
+		sb.append("cp_unixtime=?,");
+		sb.append("cp_type=?,");
+		sb.append("cp_hp=?");
+		try {
+			dao.openPstmt(sb.toString());
+
+			//Utils.getLogger().warning(sb.toString());
+
+			
+			dao.pstmt().setString(1, Utils.getyyyymmdd());
+			dao.pstmt().setLong(2, unixtime);
+			dao.pstmt().setString(3, cp_type);
+			dao.pstmt().setString(4, cp_hp);
+			dao.pstmt().executeUpdate();
+
+
+			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS060";
+			 
+		} catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS061";
+		} finally {
+			dao.closePstmt();
+		}
+
+		return last_id;
+	}
+
+	
+	/**
+	* int get_eventcnt
+	* @param mb_hp
+	* @param eventcode
+	* @return int
+	*/
+	private static int get_checkpoint(String cp_type, String cp_hp){
+		int retVal = 0;
+		StringBuilder sb = new StringBuilder();
+
+		MyDataObject dao = new MyDataObject();
+		sb.append("SELECT count(*) cnt FROM `cashq`.`check_point` ");
+		sb.append("WHERE cp_hp=? ");
+		sb.append("AND cp_type=? ");
+		sb.append("AND cp_date=? ");
+		
+
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1,	cp_hp);
+			dao.pstmt().setString(2, cp_type);
+			dao.pstmt().setString(3, Utils.getyyyymmdd());
+			
+			dao.setRs (dao.pstmt().executeQuery());
+
+			if (dao.rs().next()) {
+				retVal = dao.rs().getInt("cnt");
+			}			
+		} catch (SQLException e) {
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS039";
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS040";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return retVal;
+	}
 }

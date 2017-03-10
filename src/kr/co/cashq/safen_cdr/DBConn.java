@@ -137,8 +137,8 @@ public class DBConn {
 //			}
 			
 			try {
-				stmt.execute("create table " + hist_table
-						+ " as select * from safen_cdr limit 0");//테이블만 생성하고 데이터는 옮기지 않는다.
+				stmt.execute("create table sktl." + hist_table
+						+ " as select * from sktl.safen_cdr limit 0");//테이블만 생성하고 데이터는 옮기지 않는다.
 			} catch (SQLException e) {
 				Utils.getLogger().warning(e.getMessage());
 				DBConn.latest_warning = "ErrPOS018";
