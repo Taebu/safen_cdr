@@ -1,0 +1,300 @@
+Mar 22, 2017 12:03:38 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:13:38 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:23:38 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:33:39 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:43:40 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:53:41 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:03:43 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:13:45 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:23:46 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:33:46 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:43:46 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:53:47 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:03:47 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:13:48 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:23:49 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:33:50 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:43:51 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:53:52 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:03:54 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:13:56 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:23:56 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:33:59 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:44:00 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:54:01 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:04:02 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:14:02 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:24:05 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:34:05 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:44:06 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:54:06 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:04:07 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:14:07 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:24:10 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:34:10 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:44:10 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:54:10 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:04:13 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:14:14 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:24:15 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:34:15 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:44:18 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:54:18 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:04:19 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:14:21 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:24:23 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:34:23 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:44:23 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:54:25 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:04:25 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:14:25 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:24:27 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:34:27 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:44:29 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:54:29 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:04:32 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:14:35 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:24:39 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:34:40 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:44:43 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:54:43 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:04:44 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:14:45 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:24:45 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:34:47 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:44:47 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:54:47 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:04:48 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:14:48 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:18:46 AM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Mar 22, 2017 11:24:48 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:34:49 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:44:50 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:54:51 AM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:04:52 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:14:52 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:24:53 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:34:53 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:44:54 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 12:54:54 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:04:55 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:14:56 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:24:56 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:34:57 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:44:59 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 1:54:59 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:05:00 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:15:01 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:25:02 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:35:03 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:45:03 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 2:55:04 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:05:04 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:15:05 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:25:06 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:35:07 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:45:08 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 3:55:10 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:05:11 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:15:12 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:25:12 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:35:13 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:45:13 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 4:53:43 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Mar 22, 2017 4:55:14 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:01:47 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Mar 22, 2017 5:03:01 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Mar 22, 2017 5:05:15 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:15:16 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:25:17 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:35:17 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:45:17 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 5:55:18 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:05:18 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:15:19 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:25:19 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:35:20 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:45:21 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 6:55:22 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:05:22 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:15:23 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:25:24 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:35:24 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:45:24 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 7:55:25 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:05:25 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:15:26 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:25:26 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:35:27 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:45:28 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 8:55:28 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:05:29 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:15:29 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:25:30 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:35:31 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:45:31 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 9:55:32 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:02:44 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Mar 22, 2017 10:05:33 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:15:33 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:25:33 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:30:37 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Mar 22, 2017 10:35:34 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:45:35 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 10:55:36 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:05:37 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:15:38 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:25:39 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:35:39 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:45:40 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
+Mar 22, 2017 11:55:41 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive

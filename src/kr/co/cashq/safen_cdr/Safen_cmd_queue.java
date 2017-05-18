@@ -237,9 +237,7 @@ public class Safen_cmd_queue {
 						*/
 
 
-						/* 4-4 */
-						eventcnt = get_eventcnt(mb_hp,eventcode);
-
+						
 						/* 4-5 */
 						//String[] callArray = new String[] {"reviewpt","downpt"};
 						String[] callArray = new String[] {"fivept","freedailypt","freeuserpt","freept"};
@@ -266,6 +264,11 @@ public class Safen_cmd_queue {
 						is_callpt=Arrays.asList(callArray).contains(ed_type);
 
 
+						if(is_freeuserpt)
+						{
+							
+							
+						}
 						
 						if(is_callpt){
 						//calldaycnt = get_daycnt(mb_hp,"callpt");
@@ -312,6 +315,8 @@ public class Safen_cmd_queue {
 						}
 						}/* if(biz_code!=null||biz_code!=""){ ... } */
 
+						/* 4-4 */
+						eventcnt = get_eventcnt(mb_hp,eventcode);
 						/* 4-13 */
 						pt_stat=chk_pt5(ed_type);
 
@@ -1178,6 +1183,7 @@ call_hangup_dt: 2016-07-22 18:13:16
 		StringBuilder sb = new StringBuilder();
 
 		MyDataObject dao = new MyDataObject();
+		
 		sb.append("SELECT ");
 		sb.append("ev_st_dt,");
 		sb.append("ev_ed_dt,");
@@ -1896,4 +1902,5 @@ call_hangup_dt: 2016-07-22 18:13:16
 
 		return retVal;
 	}
+
 }
