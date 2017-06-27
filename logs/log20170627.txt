@@ -300,3 +300,9 @@ Jun 27, 2017 7:13:56 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
 WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
 Jun 27, 2017 7:21:43 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
 INFO: SAFEN_CDR alive
+Jun 27, 2017 7:29:07 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Jun 27, 2017 7:29:35 PM kr.co.cashq.safen_cdr.Safen_cmd_queue update_stcall
+WARNING: UPDATE `cashq`.`store` SET callcnt=callcnt+1 WHERE tel=?처리결과가 [1]가 아닙니다.[0]
+Jun 27, 2017 7:31:44 PM kr.co.cashq.safen_cdr.SAFEN_CDR doMainProcess
+INFO: SAFEN_CDR alive
