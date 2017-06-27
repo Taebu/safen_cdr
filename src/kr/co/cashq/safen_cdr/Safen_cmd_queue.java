@@ -316,7 +316,7 @@ public class Safen_cmd_queue {
 						}/* if(biz_code!=null||biz_code!=""){ ... } */
 
 						/* 4-4 */
-						eventcnt = get_eventcnt(mb_hp,eventcode);
+						eventcnt = get_eventcnt(mb_hp,eventcode,ed_type);
 						/* 4-13 */
 						pt_stat=chk_pt5(ed_type);
 
@@ -1246,7 +1246,7 @@ call_hangup_dt: 2016-07-22 18:13:16
 	* @param eventcode
 	* @return int
 	*/
-	private static int get_eventcnt(String mb_hp, String eventcode){
+	private static int get_eventcnt(String mb_hp, String eventcode,String ed_type){
 		int retVal = 0;
 		StringBuilder sb = new StringBuilder();
 
@@ -1254,12 +1254,14 @@ call_hangup_dt: 2016-07-22 18:13:16
 		sb.append("SELECT count(*) cnt FROM `cashq`.`0507_point` ");
 		sb.append("WHERE mb_hp=? ");
 		sb.append("AND eventcode=? ");
+		sb.append("AND ed_type=? ");
 		sb.append("AND status in ('1','2','3','4');");
 
 		try {
 			dao.openPstmt(sb.toString());
 			dao.pstmt().setString(1, mb_hp);
 			dao.pstmt().setString(2, eventcode);
+			dao.pstmt().setString(3, ed_type);
 			
 			dao.setRs (dao.pstmt().executeQuery());
 
