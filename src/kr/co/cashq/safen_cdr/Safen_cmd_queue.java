@@ -16,6 +16,10 @@ import java.util.Date;
  * @author mtb
  * 2017-03-10 (금) 13:36:49 
  *  리뷰 포인트 90일 60일로 변경
+ *  
+ *  2017-08-18 (금) 16:10:00
+ *   세일 포인트 추가
+ *   동시 적립 가능하도록 변경 
  */
 public class Safen_cmd_queue {
 	
@@ -50,6 +54,7 @@ public class Safen_cmd_queue {
 		int daycnt = 0;
 		int reviewdaycnt = 0;
 		int downdaycnt = 0;
+		int saledaycnt = 0;
 		int calldaycnt = 0;
 		int pt_day_cnt = 0;
 		int pt_event_cnt = 0;
@@ -66,7 +71,8 @@ public class Safen_cmd_queue {
 		boolean is_callpt = false;
 		boolean is_reviewpt = false;
 		boolean is_downpt = false;
-
+		boolean is_salept = false;
+		
 		boolean is_realcode=false;
 		boolean is_userpt=false;
 		boolean chk_realcode=false;
@@ -260,15 +266,12 @@ public class Safen_cmd_queue {
 						is_reviewpt=is_reviewpt(ed_type);
 						/* 4-10-3 */
 						is_downpt=is_downpt(ed_type);
-
+						/* 4-10-4 */
 						is_callpt=Arrays.asList(callArray).contains(ed_type);
 
-
-						if(is_freeuserpt)
-						{
-							
-							
-						}
+						/* 4-10-5 */
+						is_salept=is_salept(ed_type);
+						
 						
 						if(is_callpt){
 						//calldaycnt = get_daycnt(mb_hp,"callpt");
@@ -277,6 +280,8 @@ public class Safen_cmd_queue {
 						reviewdaycnt = get_checkpoint("reviewpt",mb_hp);
 						}else if(is_downpt){
 						downdaycnt =  get_checkpoint("downpt",mb_hp);
+						}else if(is_salept){
+						saledaycnt =  get_checkpoint("salept",mb_hp);
 						}
 
 						
@@ -436,6 +441,27 @@ public class Safen_cmd_queue {
 										tel,pre_pay,pt_stat);
 									
 									set_checkpoint("downpt",mb_hp);
+								}else if(is_point(pre_pay)
+										&&is_datepoint(ev_st_dt,ev_ed_dt)
+										&&saledaycnt==0
+										&&eventcnt<pt_event_cnt
+										&&is_hp
+										&&is_answer
+										&&is_salept
+										&&chk_realcode
+								){
+									/* salept 11. 적립조건*/
+									/* 11-1 */
+									set_0507_point(
+										mb_hp,store_name, str_hangup_time, 
+										biz_code, call_hangup_dt, daily_st_dt, 
+										daily_ed_dt, eventcode, mb_id, 
+										certi_code, st_dt, ed_dt, 
+										store_seq, str_tcl_seq, moddate, 
+										accdate,ed_type,type,
+										tel,pre_pay,pt_stat);
+									
+									set_checkpoint("salept",mb_hp);
 								}
 						
 
@@ -1429,6 +1455,22 @@ call_hangup_dt: 2016-07-22 18:13:16
 		return retVal;
 	}
 
+	/**
+	* boolean is_salept
+	* @param ed_type
+	* @return boolean
+	*/
+	private static boolean is_salept(String ed_type){
+		boolean retVal=false;
+		if(ed_type!=null){
+			if(ed_type.length()>=5){
+				retVal = ed_type.substring(0,6).equals("salept");
+			}else{
+				retVal = ed_type.equals("");
+			}
+		}
+		return retVal;
+	}
 	/**
 	* int get_user_event_index
 	* @param mb_hp
