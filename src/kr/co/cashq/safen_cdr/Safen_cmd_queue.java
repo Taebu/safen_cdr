@@ -115,14 +115,14 @@ public class Safen_cmd_queue {
 			//sb.append("select * from safen_cdr where seq<192 limit 1;");
 			//sb.append("select * from safen_cdr where seq<221 limit 1;");
 			//sb.append("select * from safen_cdr limit 1;");
-			sb.append("select * from sktl.safen_cdr order by seq limit 1;");
+			sb.append("select * from sktl.safen_cdr order by seq;");
 			
 			try {
 				dao.openPstmt(sb.toString());
 
 				dao.setRs(dao.pstmt().executeQuery());
 
-				if (dao.rs().next()) {
+				while(dao.rs().next()) {
 					
 					SAFEN_CDR.heart_beat = 1;
 					Boolean chk_seq=dao.rs().getInt("seq")>0;
