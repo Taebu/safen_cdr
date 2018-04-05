@@ -443,7 +443,7 @@ public class Safen_cmd_queue {
 									set_checkpoint("downpt",mb_hp);
 								}else if(is_point(pre_pay)
 										&&is_datepoint(ev_st_dt,ev_ed_dt)
-										&&saledaycnt==0
+										&&saledaycnt<pt_day_cnt
 										&&eventcnt<pt_event_cnt
 										&&is_hp
 										&&is_answer
