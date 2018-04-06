@@ -397,11 +397,14 @@ public class Safen_cmd_queue {
 								tel,pre_pay,pt_stat);
 							
 							set_checkpoint("callpt",mb_hp);
+/*
+무제한요청
+&&eventcnt<pt_event_cnt 삭제
+2018-04-06 (금) 16:44:16  https://github.com/Taebu/cashq/issues/283 */
 						}else if(is_point(pre_pay)
 								&&service_sec>9
 								&&is_datepoint(ev_st_dt,ev_ed_dt)
 								&&reviewdaycnt==0
-								&&eventcnt<pt_event_cnt
 								&&is_hp
 								&&is_answer
 								&&is_reviewpt
