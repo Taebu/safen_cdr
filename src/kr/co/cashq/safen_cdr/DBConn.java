@@ -153,6 +153,44 @@ public class DBConn {
 		return hist_table;
 	}
 
+
+	/**
+	 * safen_cmd_hist_YYYYMM테이블의 존재성을 판단한 후
+	 * 존재하지 않으면 테이블을 생성한다.
+	 * 또한 존재하지 않으면 해당 월의 이름으로 된 로그파일을 지운다.
+	 * @return
+	 */
+	public static String isExistTableYYYYMM(String database_name,String table_name) 
+	{
+		boolean isExistLogTable = false;
+		String hist_table = table_name+"_" + Utils.getYYYYMM();
+		isExistLogTable = isExistTable(database_name,hist_table);
+		if (isExistLogTable == false)
+		{
+//			File f = new File(Utils.getLoggerFilePath());
+//			
+//			if (f.exists()) 
+//			{
+//				f.delete();// 파일을 지운다.
+//			}
+			
+			try {
+				stmt.execute("create table "+database_name+"." + hist_table
+						+ " as select * from "+database_name+"."+table_name+" limit 0");//테이블만 생성하고 데이터는 옮기지 않는다.
+			} catch (SQLException e) {
+				Utils.getLogger().warning(e.getMessage());
+				DBConn.latest_warning = "ErrPOS018";
+				e.printStackTrace();
+			}
+			catch (Exception e) {
+				Utils.getLogger().warning(e.getMessage());
+				Utils.getLogger().warning(Utils.stack(e));
+				DBConn.latest_warning = "ErrPOS019";
+			}
+		}
+		return hist_table;
+	}
+	
 	/**
 	 * 테이블이 존재하는지 조사한 후 조사하면 true를 리턴한다.
 	 * @param tname
@@ -192,4 +230,43 @@ public class DBConn {
 		return exi;
 	}
 
+	
+	/**
+	 * 테이블이 존재하는지 조사한 후 조사하면 true를 리턴한다.
+	 * @param tname
+	 * @return
+	 */
+	private static boolean isExistTable(String database_name, String tname) {
+		StringBuffer sb = new StringBuffer();
+
+		boolean exi = false;
+
+		sb.append("select exists(SELECT 1 FROM information_schema.tables WHERE table_schema= '").append(database_name).append("' AND table_name = ?) a");
+
+		MyDataObject dao = new MyDataObject();
+		try {
+			dao.openPstmt(sb.toString());
+			dao.pstmt().setString(1, tname);
+			
+			
+			dao.setRs(dao.pstmt().executeQuery());
+			if (dao.rs().next()) {
+				exi = dao.rs().getInt(1) == 1;
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Utils.getLogger().warning(e.getMessage());
+			DBConn.latest_warning = "ErrPOS020";
+		}
+		catch (Exception e) {
+			Utils.getLogger().warning(e.getMessage());
+			Utils.getLogger().warning(Utils.stack(e));
+			DBConn.latest_warning = "ErrPOS021";
+		}
+		finally {
+			dao.closePstmt();
+		}
+
+		return exi;
+	}
 }

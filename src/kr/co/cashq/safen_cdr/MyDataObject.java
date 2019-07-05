@@ -7,7 +7,10 @@ package kr.co.cashq.safen_cdr;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 데이터 핸들링 관련 디자인 패턴과 관련된다.
@@ -136,5 +139,17 @@ public class MyDataObject {
 		retVal=pstmt_str + "처리결과가 ["+expectedCnt+"]가 아닙니다.["+ realCount+"]";
 		return retVal;
 	}
+	
+	public Map<String,String> convertResultSetToMap(ResultSet rs) throws SQLException {
+	    ResultSetMetaData md = rs.getMetaData();
+	    
+	    int columns = md.getColumnCount();
+	    Map<String,String> list = new HashMap<String,String>();
 
+        for(int i=1; i<=columns; ++i) {
+            list.put(md.getColumnName(i),rs.getString(i));
+        }
+
+	    return list;
+	}
 }

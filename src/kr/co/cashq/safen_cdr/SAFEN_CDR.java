@@ -236,6 +236,9 @@ public class SAFEN_CDR {
 		} else {
 			// /여기서 DB를 읽어서 작업한다.
 			Safen_cmd_queue.doMainProcess();
+			
+			Safen_cmd_queue2.doMainProcess();
+			
 			return true;
 		}
 	}
