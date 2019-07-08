@@ -37,7 +37,6 @@ public class Safen_cmd_queue {
 		String daily_st_dt="";
 		String daily_ed_dt="";
 		String review_ed_dt="";
-		String cid_ed_dt="";
 		String mb_hp="";
 		String eventcode="";
 		String cash="";
@@ -59,7 +58,6 @@ public class Safen_cmd_queue {
 		int reviewdaycnt = 0;
 		int downdaycnt = 0;
 		int saledaycnt = 0;
-		int ciddaycnt = 0;
 		int calldaycnt = 0;
 		int pt_day_cnt = 0;
 		int pt_event_cnt = 0;
@@ -77,23 +75,19 @@ public class Safen_cmd_queue {
 		boolean is_reviewpt = false;
 		boolean is_downpt = false;
 		boolean is_salept = false;
-		boolean is_cidpt = false;
-		
 		boolean is_realcode=false;
 		boolean is_userpt=false;
 		boolean chk_realcode=false;
 		boolean is_answer=false;
-		
 		boolean call_point_condition = false;
 		boolean special_point_condition = false;
-		
 		boolean five_point_condition = false;
 		boolean freedaily_point_condition = false;
 		boolean freeuser_point_condition = false;
 		boolean review_point_condition = false;
 		boolean down_point_condition = false;
 		boolean sale_point_condition = false;
-		boolean cid_point_condition = false;
+		
 		
 		/* 상점 정보 */
 		String[] store_info			= new String[5];
@@ -310,7 +304,7 @@ public class Safen_cmd_queue {
 						/* 4-10-5 */
 						is_salept=is_salept(ed_type);
 						
-						is_cidpt=is_cidpt(ed_type);
+						
 						
 						if(is_callpt){
 							//calldaycnt = get_daycnt(mb_hp,"callpt");
@@ -321,8 +315,6 @@ public class Safen_cmd_queue {
 							downdaycnt =  get_checkpoint("downpt",mb_hp);
 						}else if(is_salept){
 							saledaycnt =  get_checkpoint("salept",mb_hp);
-						}else if(is_cidpt){
-							ciddaycnt =  get_checkpoint("cidpt",mb_hp);
 						}
 
 						
@@ -332,7 +324,7 @@ public class Safen_cmd_queue {
 						
 						review_ed_dt=Utils.add60day();
 						
-						cid_ed_dt=Utils.add90day();
+						
 						
 						/* 4-11 */
 						if(is_freeuserpt){
@@ -493,15 +485,6 @@ public class Safen_cmd_queue {
 						/* 10. */
 						sale_point_condition =	sale_point_condition&&is_salept;
 
-						/* cid_point_condition */
-						/* 6개의 공통 조건 */
-						cid_point_condition = call_point_condition;
-						
-						/* 4. */
-						cid_point_condition =	cid_point_condition&&ciddaycnt<pt_day_cnt;
-						
-						/* 10. */
-						cid_point_condition =	cid_point_condition&&is_cidpt;
 						
 						/* five point 조건을 만족 했을 때 */
 						if(five_point_condition){
@@ -592,64 +575,10 @@ public class Safen_cmd_queue {
 								tel,pre_pay,pt_stat,point);
 							
 								set_checkpoint("salept",mb_hp);
-						}else if(cid_point_condition){
-								/* cidpt 12. 적립조건*/
-								/* 12-1 */
-								set_0507_point(
-									mb_hp,store_name, str_hangup_time, 
-									biz_code, call_hangup_dt, daily_st_dt, 
-									cid_ed_dt, eventcode, mb_id, 
-									certi_code, st_dt, ed_dt, 
-									store_seq, str_tcl_seq, moddate, 
-									accdate,ed_type,type,
-									tel,pre_pay,pt_stat,"900");
-								
-								set_checkpoint("cidpt",mb_hp);							
 						}
-						
-						
 						
 						done_safen_cdr(hist_table,  seq);
 						
-					} else {
-						//Utils.getLogger().info("chk_seq false log");
-						if (!"".equals(Env.confirmSafen)) {
-							// cmq_queue에는 없는 경우라면
-							//SafeNo safeNo = new SafeNo();
-							String retCode = "";
-							try {
-								//retCode = safeNo.SafeNoAsk(Env.getInstance().CORP_CODE,Env.confirmSafen);
-							} catch (Exception e) {
-								Utils.getLogger().warning(e.getMessage());
-								Utils.getLogger().warning(Utils.stack(e));
-								DBConn.latest_warning = "ErrPOS029";
-							}
-
-							if (-1 < retCode.indexOf(Env.confirmSafen_in)) {
-								/* retCode = "01040421182,01040421182" 와 같은 형태로 리턴되는 식임 */
-								Utils.getLogger().info(
-										"OK 착신연결성공" + Env.confirmSafen + "->"
-												+ Env.confirmSafen_in);
-							} else {// 취소된 경우 recCode = "E401"이 리턴됨
-								if (Env.NULL_TEL_NUMBER
-										.equals(Env.confirmSafen_in)
-										&& "E401".equals(retCode)) {
-									Utils.getLogger().info(
-											"OK 착신취소성공" + Env.confirmSafen
-													+ ", retCode:[" + retCode
-													+ "]");
-								} else {
-									Utils.getLogger().warning(
-											"Error! " + Env.confirmSafen + "->"
-													+ Env.confirmSafen_in
-													+ "? retCode:[" + retCode
-													+ "]");
-									DBConn.latest_warning = "ErrPOS030";
-								}
-							}
-
-							Env.confirmSafen = "";
-						}
 					}
 				}				
 			} catch (SQLException e) {
@@ -1568,24 +1497,7 @@ call_hangup_dt: 2016-07-22 18:13:16
 		}
 		return retVal;
 	}
-	
 
-	/**
-	* boolean is_cidpt
-	* @param ed_type
-	* @return boolean
-	*/
-	private static boolean is_cidpt(String ed_type){
-		boolean retVal=false;
-		if(ed_type!=null){
-			if(ed_type.length()>=4){
-				retVal = ed_type.substring(0,5).equals("cidpt");
-			}else{
-				retVal = ed_type.equals("");
-			}
-		}
-		return retVal;
-	}	
 	/**
 	* int get_user_event_index
 	* @param mb_hp

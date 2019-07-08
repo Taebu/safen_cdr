@@ -141,7 +141,7 @@ public class Safen_cmd_queue2 {
 						cidpoint_info = getResultMapRows(dao.rs());
 						
 						biz_code=cidpoint_info.get("prq_store.biz_code");
-						cp_no=cidpoint_info.get("cp_no");
+						
 						point_event_info=getEventCodeInfo(biz_code);
 						
 						is_biz_code = biz_code!=null||biz_code!="";
@@ -150,43 +150,74 @@ public class Safen_cmd_queue2 {
 						{
 							pre_pay = "sl";
 							mb_hp = cidpoint_info.get("mb_hp");
+							cp_no=cidpoint_info.get("cp_no");
+							
+							/* 1 */
 							call_point_info.put("mb_hp", mb_hp);
+							
+							/* 2 */
 							call_point_info.put("point", cidpoint_info.get("prq_store.cid_point"));
+							
+							/* 3 */
 							call_point_info.put("store_name", cidpoint_info.get("prq_store.st_name"));
+							
+							/* 6 */
 							call_hangup_dt = add_second(cidpoint_info.get("cp_datetime"),5);
+							
+							/* 7 */
+							call_point_info.put("biz_code", biz_code);
 							st_dt = cidpoint_info.get("cp_datetime");
 							ed_dt = add_second(cidpoint_info.get("cp_datetime"),19);
 							call_point_info.put("call_hangup_dt", call_hangup_dt);
-							call_point_info.put("biz_code", biz_code);
-							
 							ev_st_dt=point_event_info.get("ev_st_dt");
 							ev_ed_dt=point_event_info.get("ev_ed_dt");
 							eventcode=point_event_info.get("eventcode");
 							
+							/* 8 */
 							call_point_info.put("ev_st_dt", ev_st_dt);
+							
+							/* 9 */
 							call_point_info.put("ev_ed_dt", ev_ed_dt);
+							
+							/* 10 */
 							call_point_info.put("eventcode", eventcode);
 							
+							 /* 11 */
 							call_point_info.put("mb_id", "");
+							
+							/* 12 */
 							call_point_info.put("certi_code", "");
 							
+							/* 13 */
 							call_point_info.put("st_dt", st_dt);
+							
+							/* 14 */
 							call_point_info.put("ed_dt", ed_dt);
+							
+							/* 15*/
 							call_point_info.put("tcl_seq", "0");
+							
+							/* 16*/
 							call_point_info.put("store_seq", "0");
-							call_point_info.put("status", "1");
+							
+							call_point_info.put("status", "0");
 							call_point_info.put("moddate", "0000-00-00 00:00:00");
 							call_point_info.put("accdate", "0000-00-00 00:00:00");
 							call_point_info.put("cashq_seq", "0");
 							call_point_info.put("memo", "");
 							tel = cidpoint_info.get("prq_store.mb_id");
+							
+							/* 17*/
 							call_point_info.put("tel", tel);
 							call_point_info.put("cnt_memo", "");
 							call_point_info.put("pre_pay", "sl");
 							call_point_info.put("pt_stat", "pt5");
 							ed_type=point_event_info.get("ed_type");
 							call_point_info.put("ed_type", ed_type);
-	
+							
+							/* 18*/
+							call_point_info.put("cp_no", cp_no);
+							
 							service_sec = 15;
 							pt_day_cnt = Integer.parseInt(point_event_info.get("pt_day_cnt"));
 							pt_event_cnt = Integer.parseInt(point_event_info.get("pt_event_cnt"));
@@ -280,7 +311,7 @@ public class Safen_cmd_queue2 {
 		
 		sb.append("tcl_seq=?,"); /* 15*/
 		sb.append("store_seq=?,"); /* 16*/
-		sb.append("status='1',");
+		sb.append("status='0',");
 		sb.append("moddate='0000-00-00 00:00:00',");
 		sb.append("accdate='0000-00-00 00:00:00',");
 		
@@ -291,7 +322,8 @@ public class Safen_cmd_queue2 {
 		sb.append("pre_pay='sl',");
 		
 		sb.append("pt_stat='pt5',");
-		sb.append("ed_type='cidpt';");
+		sb.append("ed_type='cidpt',");
+		sb.append("cp_no=?;"); /* 18*/
 		
 		try {
 			dao.openPstmt(sb.toString());
@@ -313,7 +345,7 @@ public class Safen_cmd_queue2 {
 			dao.pstmt().setString(15, point_info.get("tcl_seq"));
 			dao.pstmt().setString(16, point_info.get("store_seq"));
 			dao.pstmt().setString(17, point_info.get("tel"));
-
+			dao.pstmt().setString(18, point_info.get("cp_no"));
 			dao.pstmt().executeUpdate();
 		} catch (SQLException e) {
 			Utils.getLogger().warning(e.getMessage());
